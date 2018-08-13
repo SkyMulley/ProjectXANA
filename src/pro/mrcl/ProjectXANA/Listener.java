@@ -1,9 +1,13 @@
 package pro.mrcl.ProjectXANA;
 
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.TowerActivationEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.TowerDeactivationEvent;
 import org.bukkit.event.EventHandler;
+import pro.mrcl.ProjectXANA.XANAAttacks.XanaficationPly;
 
 public class Listener implements org.bukkit.event.Listener{
     private Main plugin;
+    XanaficationPly XANAPLY = new XanaficationPly();
 
 
     public Listener(Main plugin){
@@ -12,6 +16,11 @@ public class Listener implements org.bukkit.event.Listener{
 
     @EventHandler
     public void onTowerActivation(TowerActivationEvent event){
+        XANAPLY.plyXanafication();
+    }
 
+    @EventHandler
+    public void onTowerDeactivation(TowerDeactivationEvent event){
+        XANAPLY.unXanafication();
     }
 }

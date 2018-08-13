@@ -34,10 +34,13 @@ public class XanaficationPly {
     }
 
     public void unXanafication() {
-        player.removeScoreboardTag("xana");
-        player.sendMessage(ChatColor.GREEN + "You have been released from XANA's control");
-        setPlyXanafied(false);
-        Bukkit.getLogger().info(player + " has been unXanafied");
+        if(getPlyXanafied()){
+            player.removeScoreboardTag("xana");
+            player.sendMessage(ChatColor.GREEN + "You have been released from XANA's control");
+            setPlyXanafied(false);
+            Bukkit.getLogger().info(player + " has been unXanafied");
+        }
+        Bukkit.getLogger().info("[PRX] Tower deactivation was called but nobody was Xanafied!");
     }
 
     private List<Player> getPlayers() {
