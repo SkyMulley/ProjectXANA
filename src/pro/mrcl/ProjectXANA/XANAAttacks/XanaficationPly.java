@@ -15,7 +15,6 @@ public class XanaficationPly {
     private Player player;
     private Main plugin;
     private XANAMain XANAM;
-    private Main pl;
     private boolean isPlyXanafied;
     public boolean getPlyXanafied() { return isPlyXanafied;}
     public void setPlyXanafied(boolean bool) { this.isPlyXanafied = bool; }
@@ -66,8 +65,7 @@ public class XanaficationPly {
         players.addAll(Bukkit.getOnlinePlayers());
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
-            LyokoWarrior warrior = pl.getLyokoWarriors().get(player);
+            LyokoWarrior warrior = plugin.getLyokoWarriors().get(player);
             if (player.hasPermission(perm) || warrior.isVirtualized()) {
                 players.remove(i);
             }

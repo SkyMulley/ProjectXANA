@@ -22,4 +22,9 @@ public class XANAMain extends JavaPlugin {
     private void registerEvents(){
         getServer().getPluginManager().registerEvents(listener,this);
     }
+
+    public Main getPRC() {
+        Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
+        return pl;
+    }
 }
