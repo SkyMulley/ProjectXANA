@@ -20,11 +20,12 @@ public class XanaficationPly {
     public void plyXanafication() {
         List<Player> players = getPlayers();
         int pc = players.size();
+        Bukkit.getLogger().info("Attempting XANA Attack (Xanafication). Players Online: " + pc);
         if (pc >= 3) {
             Random rand = new Random();
-            int value = rand.nextInt(pc + 1 - 1) + 1;
+            int value = rand.nextInt(pc);
             Player player = players.get(value);
-            player.addScoreboardTag("xana");
+            player.addScoreboardTag("XANA");
             player.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
             setPlyXanafied(true);
             Bukkit.getLogger().info("[PRX] XANA has randomly Xanafied " + player);
@@ -35,7 +36,7 @@ public class XanaficationPly {
 
     public void unXanafication() {
         if(getPlyXanafied()){
-            player.removeScoreboardTag("xana");
+            player.removeScoreboardTag("XANA");
             player.sendMessage(ChatColor.GREEN + "You have been released from XANA's control");
             setPlyXanafied(false);
             Bukkit.getLogger().info(player + " has been unXanafied");
