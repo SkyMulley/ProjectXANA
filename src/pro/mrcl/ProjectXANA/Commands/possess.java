@@ -13,9 +13,9 @@ import pro.mrcl.ProjectXANA.XANAAttacks.XanaficationPly;
 
 public class possess extends CarthageCommand {
     private XanaficationPly XANAPLY;
-    private boolean possessable;
+    private boolean possessable = false;
     private Player player;
-    private boolean plyPossessed;
+    private boolean plyPossessed = false;
 
     public void setPossessable(boolean bool) {
         this.possessable = bool;
