@@ -54,7 +54,7 @@ public class possess extends CarthageCommand {
         try {
             Checker.checkPerm(commandSender, getPermission());
             Checker.checkarglength(strings, 1, 1);
-            if (isPlyPossessed()) {
+            if (isPlyPossessed() == false ) {
                 player = plugin.getServer().getPlayer(strings[0]);
                 if (isPossessable()) {
                     XANAPLY.teamCheck();
