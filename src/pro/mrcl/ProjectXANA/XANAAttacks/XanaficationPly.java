@@ -5,21 +5,17 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import pro.mrcl.ProjectXANA.XANAMain;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class XanaficationPly {
-    private Player player;
+    private Player xanaficationplayer;
     private Main plugin;
-    private XANAMain XANAM;
     private boolean isPlyXanafied;
     public boolean getPlyXanafied() { return isPlyXanafied;}
     public void setPlyXanafied(boolean bool) { this.isPlyXanafied = bool; }
-
-    String perm = "ProjectCarthage.autoxana.ignore";
 
     public XanaficationPly(Main plugin){
         this.plugin = plugin;
@@ -33,11 +29,11 @@ public class XanaficationPly {
             if (pc >= 3) {
                 Random rand = new Random();
                 int value = rand.nextInt(pc);
-                Player player = players.get(value);
-                player.addScoreboardTag("XANA");
-                player.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
+                xanaficationplayer = players.get(value);
+                xanaficationplayer.addScoreboardTag("XANA");
+                xanaficationplayer.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
                 setPlyXanafied(true);
-                Bukkit.getLogger().info("[PRX] XANA has randomly Xanafied " + player);
+                Bukkit.getLogger().info("[PRX] XANA has randomly Xanafied " + xanaficationplayer);
             } else {
                 Bukkit.getLogger().info("[PRX] Not enough players online to start an attack");
             }
@@ -49,10 +45,10 @@ public class XanaficationPly {
     public void unXanafication() {
         try {
             if(getPlyXanafied()){
-                player.removeScoreboardTag("XANA");
-                player.sendMessage(ChatColor.GREEN + "You have been released from XANA's control");
+                xanaficationplayer.removeScoreboardTag("XANA");
+                xanaficationplayer.sendMessage(ChatColor.GREEN + "You have been released from XANA's control");
                 setPlyXanafied(false);
-                Bukkit.getLogger().info(player + " has been unXanafied");
+                Bukkit.getLogger().info(xanaficationplayer + " has been unXanafied");
             }
             Bukkit.getLogger().info("[PRX] Tower deactivation was called but nobody was Xanafied!");
         }catch (Exception e){
@@ -66,7 +62,7 @@ public class XanaficationPly {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
             LyokoWarrior warrior = plugin.getLyokoWarriors().get(player);
-            if (player.hasPermission(perm) || warrior.isVirtualized()) {
+            if (player.hasPermission("ProjectCarthage.autoxana.ignore") || warrior.isVirtualized()) {
                 players.remove(i);
             }
         }

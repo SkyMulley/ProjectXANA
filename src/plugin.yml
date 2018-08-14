@@ -1,7 +1,7 @@
 name: ProjectXANA
 version: 0.1
 author: Sky, GoodOldJack12
-main: pro.mrcl.ProjectXANA.Main
+main: pro.mrcl.ProjectXANA.XANAMain
 depend: [ProjectCarthage]
 load: POSTWORLD
 website: www.mrcl.pro
