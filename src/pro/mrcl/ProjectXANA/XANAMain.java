@@ -11,6 +11,7 @@ public class XANAMain extends JavaPlugin {
     @Override
     public void onEnable(){
         registerEvents();
+        registerCommands();
         getLogger().info("ProjectXANA has booted up!");
     }
 
@@ -29,6 +30,7 @@ public class XANAMain extends JavaPlugin {
     }
 
     private void registerCommands(){
-        this.getCommand("possess").setExecutor(new possess(this));
+        Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
+        this.getCommand("possess").setExecutor(new possess(pl));
     }
 }

@@ -36,10 +36,11 @@ public class Listener implements org.bukkit.event.Listener{
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event){
         Player leaveplayer = event.getPlayer();
+        XANAPLY.teamCheck();
         Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA");
         if(team.hasPlayer(leaveplayer)){
             team.removePlayer(leaveplayer);
-            Bukkit.getLogger().info("[PRX]" +leaveplayer.getName() +" left the server while under XANA possesion");
+            Bukkit.getLogger().info("[PRX]" +leaveplayer.getName() +" left the server while under XANA possession");
         }
     }
 }
