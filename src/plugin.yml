@@ -6,3 +6,7 @@ depend: [ProjectCarthage]
 load: POSTWORLD
 website: www.mrcl.pro
 api-version: 1.12
+commands:
+  possess:
+    description: Sets the target under the control of XANA
+    permission: ProjectXANA.possess

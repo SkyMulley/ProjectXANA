@@ -1,10 +1,10 @@
 package pro.mrcl.ProjectXANA;
 
-import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.XANA;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+import pro.mrcl.ProjectXANA.Commands.possess;
 
 public class XANAMain extends JavaPlugin {
     private Listener listener = new Listener(this);
@@ -26,5 +26,9 @@ public class XANAMain extends JavaPlugin {
     public Main getPRC() {
         Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
         return pl;
+    }
+
+    private void registerCommands(){
+        this.getCommand("possess").setExecutor(new possess(this));
     }
 }
