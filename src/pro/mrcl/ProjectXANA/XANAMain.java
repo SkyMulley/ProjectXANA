@@ -1,8 +1,12 @@
 package pro.mrcl.ProjectXANA;
 
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 
-public class Main extends JavaPlugin {
+public class XANAMain extends JavaPlugin {
     private Listener listener = new Listener(this);
     @Override
     public void onEnable(){

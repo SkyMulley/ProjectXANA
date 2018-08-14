@@ -5,6 +5,7 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import pro.mrcl.ProjectXANA.XANAMain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.Random;
 public class XanaficationPly {
     private Player player;
     private Main plugin;
+    private XANAMain XANAM;
+    private Main pl;
     private boolean isPlyXanafied;
     public boolean getPlyXanafied() { return isPlyXanafied;}
     public void setPlyXanafied(boolean bool) { this.isPlyXanafied = bool; }
@@ -63,7 +66,8 @@ public class XanaficationPly {
         players.addAll(Bukkit.getOnlinePlayers());
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            LyokoWarrior warrior = plugin.getLyokoWarriors().get(player);
+            Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
+            LyokoWarrior warrior = pl.getLyokoWarriors().get(player);
             if (player.hasPermission(perm) || warrior.isVirtualized()) {
                 players.remove(i);
             }
