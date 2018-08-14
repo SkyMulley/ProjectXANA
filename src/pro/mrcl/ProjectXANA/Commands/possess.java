@@ -13,9 +13,9 @@ import pro.mrcl.ProjectXANA.XANAAttacks.XanaficationPly;
 
 public class possess extends CarthageCommand {
     private XanaficationPly XANAPLY;
-    private boolean possessable = false;
+    private boolean possessable;
     private Player player;
-    private boolean plyPossessed = false;
+    private boolean plyPossessed;
 
     public void setPossessable(boolean bool) {
         this.possessable = bool;
@@ -67,7 +67,7 @@ public class possess extends CarthageCommand {
                     return true;
                 } else {
                     commandSender.sendMessage(ChatColor.RED + "Possession cannot occur due to no towers being activated or a tower has been deactivated recently");
-                    Bukkit.getLogger().info("[PRX]" + player.getName() + "has had a possession attempted on him by " + commandSender.getName());
+                    Bukkit.getLogger().info("[PRX]" + player.getName() + "" + " has had a possession attempted on him by " + commandSender.getName());
                     return true;
                 }
             } else {
