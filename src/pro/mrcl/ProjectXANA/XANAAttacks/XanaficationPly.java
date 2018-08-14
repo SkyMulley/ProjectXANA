@@ -73,9 +73,9 @@ public class XanaficationPly {
 
     public void xanafiedDisconnect(Player leaveplayer) {
         if (getPlyXanafied()) {
-            if (leaveplayer == xanaficationplayer) {
+            if (leaveplayer.equals(xanaficationplayer)) {
                 team.removePlayer(xanaficationplayer);
-                Bukkit.getLogger().info("[PRX] Xanafied player " +xanaficationplayer +" has left");
+                Bukkit.getLogger().info("[PRX] Xanafied player " +xanaficationplayer.getName() +" has left");
             }
         }
     }
