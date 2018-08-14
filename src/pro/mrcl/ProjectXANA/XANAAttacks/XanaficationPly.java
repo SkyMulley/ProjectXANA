@@ -33,7 +33,7 @@ public class XanaficationPly {
                 xanaficationplayer.addScoreboardTag("XANA");
                 xanaficationplayer.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
                 setPlyXanafied(true);
-                Bukkit.getLogger().info("[PRX] XANA has randomly Xanafied " + xanaficationplayer);
+                Bukkit.getLogger().info("[PRX] XANA has randomly Xanafied " + xanaficationplayer.getName());
             } else {
                 Bukkit.getLogger().info("[PRX] Not enough players online to start an attack");
             }
