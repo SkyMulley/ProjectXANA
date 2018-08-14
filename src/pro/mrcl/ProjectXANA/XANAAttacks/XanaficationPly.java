@@ -5,6 +5,7 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class XanaficationPly {
     private boolean isPlyXanafied;
     public boolean getPlyXanafied() { return isPlyXanafied;}
     public void setPlyXanafied(boolean bool) { this.isPlyXanafied = bool; }
+    Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA");
 
     public XanaficationPly(Main plugin){
         this.plugin = plugin;
@@ -30,7 +32,7 @@ public class XanaficationPly {
                 Random rand = new Random();
                 int value = rand.nextInt(pc);
                 xanaficationplayer = players.get(value);
-                xanaficationplayer.addScoreboardTag("XANA");
+                team.addPlayer(xanaficationplayer);
                 xanaficationplayer.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
                 setPlyXanafied(true);
                 Bukkit.getLogger().info("[PRX] XANA has randomly Xanafied " + xanaficationplayer.getName());
@@ -45,7 +47,7 @@ public class XanaficationPly {
     public void unXanafication() {
         try {
             if(getPlyXanafied()){
-                xanaficationplayer.removeScoreboardTag("XANA");
+                team.removePlayer(xanaficationplayer);
                 xanaficationplayer.sendMessage(ChatColor.GREEN + "You have been released from XANA's control");
                 setPlyXanafied(false);
                 Bukkit.getLogger().info(xanaficationplayer + " has been unXanafied");
@@ -67,6 +69,15 @@ public class XanaficationPly {
             }
         }
         return players;
+    }
+
+    public void xanafiedDisconnect(Player leaveplayer) {
+        if (getPlyXanafied()) {
+            if (leaveplayer == xanaficationplayer) {
+                team.removePlayer(xanaficationplayer);
+                Bukkit.getLogger().info("[PRX] Xanafied player " +xanaficationplayer +" has left");
+            }
+        }
     }
 }
 //
