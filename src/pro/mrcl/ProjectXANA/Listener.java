@@ -7,7 +7,8 @@ import pro.mrcl.ProjectXANA.XANAAttacks.XanaficationPly;
 
 public class Listener implements org.bukkit.event.Listener{
     private Main plugin;
-    XanaficationPly XANAPLY = new XanaficationPly();
+    private mrcl.pro.GoodOldJack12.ProjectCarthage.Main prcplugin;
+    XanaficationPly XANAPLY = new XanaficationPly(prcplugin);
 
 
     public Listener(Main plugin){
