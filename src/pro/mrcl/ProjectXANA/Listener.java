@@ -7,12 +7,11 @@ import pro.mrcl.ProjectXANA.XANAAttacks.XanaficationPly;
 
 public class Listener implements org.bukkit.event.Listener{
     private XANAMain plugin;
-    private mrcl.pro.GoodOldJack12.ProjectCarthage.Main prcplugin;
-    XanaficationPly XANAPLY = new XanaficationPly(prcplugin);
-
+    private XanaficationPly XANAPLY;
 
     public Listener(XANAMain plugin){
         this.plugin = plugin;
+        XANAPLY = new XanaficationPly(plugin.getPRC());
     }
 
     @EventHandler
