@@ -20,6 +20,8 @@ public class possess extends CarthageCommand {
 
     public void setPlyPossessed(boolean bool) { this.plyPossessed = bool; }
 
+    public Player whoAmI() { return player; }
+
     public boolean isPlyPossessed() { return plyPossessed; }
 
     public possess(Main plugin) {
@@ -39,7 +41,6 @@ public class possess extends CarthageCommand {
                 player = plugin.getServer().getPlayer(strings[0]);
                 Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
                 Network network = pl.getNetwork();
-                commandSender.sendMessage("Towers active: " +network.getMultiscan().getTotalTowers());
                 if (network.getMultiscan().getTotalTowers() != 0) {
                     Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA");
                     team.addPlayer(player);
