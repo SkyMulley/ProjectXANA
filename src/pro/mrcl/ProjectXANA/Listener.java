@@ -23,23 +23,21 @@ public class Listener implements org.bukkit.event.Listener{
     @EventHandler
     public void onTowerActivation(TowerActivationEvent event){
         XANAPLY.plyXanafication();
-        possession.setPossessable(true);
     }
 
     @EventHandler
     public void onTowerDeactivation(TowerDeactivationEvent event){
         XANAPLY.unXanafication();
         possession.unXanafication();
-        possession.setPossessable(false);
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event){
         Player leaveplayer = event.getPlayer();
-        XANAPLY.teamCheck();
         Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA");
         if(team.hasPlayer(leaveplayer)){
             team.removePlayer(leaveplayer);
+            possession.setPlyPossessed(false);
             Bukkit.getLogger().info("[PRX]" +leaveplayer.getName() +" left the server while under XANA possession");
         }
     }

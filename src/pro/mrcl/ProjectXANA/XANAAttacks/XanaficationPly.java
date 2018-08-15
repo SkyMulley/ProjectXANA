@@ -5,9 +5,6 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
@@ -35,7 +32,6 @@ public class XanaficationPly {
                 Random rand = new Random();
                 int value = rand.nextInt(pc);
                 xanaficationplayer = players.get(value);
-                teamCheck();
                 team.addPlayer(xanaficationplayer);
                 xanaficationplayer.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
                 setPlyXanafied(true);
@@ -44,14 +40,13 @@ public class XanaficationPly {
                 Bukkit.getLogger().info("[PRX] Not enough players online to start an attack");
             }
         }catch (Exception e){
-            Bukkit.getLogger().info("[PRX] Something went wrong while Xanafying a player");
+            Bukkit.getLogger().info("[PRX] Something went wrong while Xanafying a player: " +e);
         }
     }
 
     public void unXanafication() {
         try {
             if(getPlyXanafied()){
-                teamCheck();
                 team.removePlayer(xanaficationplayer);
                 xanaficationplayer.sendMessage(ChatColor.GREEN + "You have been released from XANA's control");
                 setPlyXanafied(false);
@@ -59,7 +54,7 @@ public class XanaficationPly {
             }
             Bukkit.getLogger().info("[PRX] Tower deactivation was called but nobody was Xanafied!");
         }catch (Exception e){
-            Bukkit.getLogger().info("[PRX] Something went wrong while UnXanafiying a player");
+            Bukkit.getLogger().info("[PRX] Something went wrong while UnXanafiying a player: " +e);
         }
     }
 
@@ -74,17 +69,6 @@ public class XanaficationPly {
             }
         }
         return players;
-    }
-
-    public void teamCheck() {
-        if (Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA")==null) {
-            Bukkit.getLogger().info("[PRX] You do not have a XANA team on the server! This attack will not work as it should!");
-            ScoreboardManager manager = Bukkit.getScoreboardManager();
-            Scoreboard board = manager.getNewScoreboard();
-            team = board.registerNewTeam("XANA");
-        } else{
-            team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA");
-        }
     }
 }
 //

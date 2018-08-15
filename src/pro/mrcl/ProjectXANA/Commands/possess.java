@@ -1,6 +1,7 @@
 package pro.mrcl.ProjectXANA.Commands;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Util.Checker;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.VirtualStructures.Network;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.commands.Abstract.CarthageCommand;
 import org.bukkit.Bukkit;
@@ -17,29 +18,9 @@ public class possess extends CarthageCommand {
     private Player player;
     private boolean plyPossessed;
 
-    public void setPossessable(boolean bool) {
-        this.possessable = bool;
-    }
+    public void setPlyPossessed(boolean bool) { this.plyPossessed = bool; }
 
-    ;
-
-    public boolean isPossessable() {
-        return possessable;
-    }
-
-    ;
-
-    public void setPlyPossessed(boolean bool) {
-        this.plyPossessed = bool;
-    }
-
-    ;
-
-    public boolean isPlyPossessed() {
-        return plyPossessed;
-    }
-
-    ;
+    public boolean isPlyPossessed() { return plyPossessed; }
 
     public possess(Main plugin) {
         super(plugin, "possess");
@@ -56,8 +37,10 @@ public class possess extends CarthageCommand {
             Checker.checkarglength(strings, 1, 1);
             if (isPlyPossessed() == false ) {
                 player = plugin.getServer().getPlayer(strings[0]);
-                if (isPossessable()) {
-                    XANAPLY.teamCheck();
+                Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
+                Network network = pl.getNetwork();
+                commandSender.sendMessage("Towers active: " +network.getMultiscan().getTotalTowers());
+                if (network.getMultiscan().getTotalTowers() != 0) {
                     Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA");
                     team.addPlayer(player);
                     player.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
@@ -66,16 +49,17 @@ public class possess extends CarthageCommand {
                     setPlyPossessed(true);
                     return true;
                 } else {
-                    commandSender.sendMessage(ChatColor.RED + "Possession cannot occur due to no towers being activated or a tower has been deactivated recently");
-                    Bukkit.getLogger().info("[PRX]" + player.getName() + "" + " has had a possession attempted on him by " + commandSender.getName());
+                    commandSender.sendMessage(ChatColor.RED + "Possession cannot occur due to no towers being activated");
+                    Bukkit.getLogger().info("[PRX]" + player.getName() + "" + " has had a possession attempted on him by " + commandSender.getName() + " but there are no towers activated!");
                     return true;
                 }
             } else {
                 commandSender.sendMessage("A player is already manually possessed! Calm down fella!");
+                Bukkit.getLogger().info("[PRX]" + player.getName() + " has had a possession attempted on him by " + commandSender.getName() + " but there is already a possessed player!");
                 return true;
             }
         } catch (Exception e) {
-            Bukkit.getLogger().info("[PRX] In a manual possession of " + player.getName() + " by " + commandSender.getName() + " the proccess failed!");
+            Bukkit.getLogger().info("[PRX] In a manual possession of " + player.getName() + " by " + commandSender.getName() + " the process failed: " +e);
             return true;
         }
     }
@@ -90,7 +74,7 @@ public class possess extends CarthageCommand {
                 Bukkit.getLogger().info(player.getName() + " has been unXanafied");
             }
         }catch (Exception e){
-            Bukkit.getLogger().info("[PRX] Something went wrong while UnXanafiying a manually Xanafied player");
+            Bukkit.getLogger().info("[PRX] Something went wrong while UnXanafiying a manually Xanafied player: " +e);
         }
     }
 }
