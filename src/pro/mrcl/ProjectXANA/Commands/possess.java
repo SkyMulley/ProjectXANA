@@ -26,7 +26,7 @@ public class possess extends CarthageCommand {
 
     public possess(Main plugin) {
         super(plugin, "possess");
-        this.setHelpMessage(ChatColor.YELLOW + "Usage: /possess <player>\nSets the target under the control of XANA");
+        this.setHelpMessage(ChatColor.YELLOW + "Usage: /possess <player>\nSets target under the control of XANA");
         this.setPermission("ProjectXANA.possess");
     }
 
@@ -39,23 +39,29 @@ public class possess extends CarthageCommand {
             Checker.checkarglength(strings, 1, 1);
             if (isPlyPossessed() == false ) {
                 player = plugin.getServer().getPlayer(strings[0]);
-                Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
-                Network network = pl.getNetwork();
-                if (network.getMultiscan().getTotalTowers() != 0) {
-                    Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA");
-                    team.addPlayer(player);
-                    player.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
-                    commandSender.sendMessage(ChatColor.GREEN + "Possession of " + player.getName() + " completed");
-                    Bukkit.getLogger().info("[PRX]" + player.getName() + " has been manually possessed by " + commandSender.getName());
-                    setPlyPossessed(true);
-                    return true;
+                if(player == null) {
+                    Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
+                    Network network = pl.getNetwork();
+                    if (network.getMultiscan().getTotalTowers() != 0) {
+                        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam("XANA");
+                        team.addPlayer(player);
+                        player.sendMessage(ChatColor.RED + "You have been possessed by XANA! Use everything you can to stop the Lyoko Warriors from deactivating the tower!");
+                        commandSender.sendMessage(ChatColor.GREEN + "Possession of " + player.getName() + " completed");
+                        Bukkit.getLogger().info("[PRX]" + player.getName() + " has been manually possessed by " + commandSender.getName());
+                        setPlyPossessed(true);
+                        return true;
+                    } else {
+                        commandSender.sendMessage(ChatColor.RED + "Possession cannot occur due to no towers being activated");
+                        Bukkit.getLogger().info("[PRX]" + player.getName() + "" + " has had a possession attempted on him by " + commandSender.getName() + " but there are no towers activated!");
+                        return true;
+                    }
                 } else {
-                    commandSender.sendMessage(ChatColor.RED + "Possession cannot occur due to no towers being activated");
-                    Bukkit.getLogger().info("[PRX]" + player.getName() + "" + " has had a possession attempted on him by " + commandSender.getName() + " but there are no towers activated!");
+                    commandSender.sendMessage("Target does not exist on the server!");
+                    Bukkit.getLogger().info("[PRX] " +commandSender.getName() + " tried to release an invalid player!");
                     return true;
                 }
             } else {
-                commandSender.sendMessage("A player is already manually possessed! Calm down fella!");
+                commandSender.sendMessage("A player is already manually possessed!");
                 Bukkit.getLogger().info("[PRX]" + player.getName() + " has had a possession attempted on him by " + commandSender.getName() + " but there is already a possessed player!");
                 return true;
             }
