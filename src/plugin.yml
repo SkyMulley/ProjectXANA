@@ -8,5 +8,8 @@ website: www.mrcl.pro
 api-version: 1.12
 commands:
   possess:
-    description: Sets the target under the control of XANA
+    description: Sets target under the control of XANA
     permission: ProjectXANA.possess
+  release:
+    description: Releases target from the control of XANA
+    permission: ProjectXANA.release
