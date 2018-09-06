@@ -9,7 +9,6 @@ import pro.mrcl.ProjectXANA.AttackLogic.ProjectXANAModule;
 import pro.mrcl.ProjectXANA.Commands.possess;
 
 public class XANAMain extends JavaPlugin {
-    private Team team;
     private Main pl;
     @Override
     public void onEnable(){
