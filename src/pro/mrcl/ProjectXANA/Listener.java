@@ -13,20 +13,6 @@ public class Listener implements org.bukkit.event.Listener{
     private XANAMain plugin;
     private Main pl;
 
-    public Listener(XANAMain plugin){
-        this.plugin = plugin;
-    }
-
-    @EventHandler
-    public void onTowerActivation(TowerActivationEvent event){
-        Bukkit.getLogger().info("[PRX] Listener detects Tower Activation Event");
-    }
-
-    @EventHandler
-    public void onTowerDeactivation(TowerDeactivationEvent event){
-        Bukkit.getLogger().info("[PRX] Listener detects Tower Deactivation Event");
-    }
-
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event){
         Bukkit.getLogger().info("[PRX] Listener detects Player Quit Event");
