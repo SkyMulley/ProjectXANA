@@ -10,10 +10,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
-import pro.mrcl.ProjectXANA.XANAAttacks.XanaficationPly;
 
 public class possess extends CarthageCommand {
-    private XanaficationPly XANAPLY;
     private boolean possessable;
     private Player player;
     private boolean plyPossessed;
