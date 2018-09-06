@@ -6,9 +6,8 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 
 
 public class ProjectXANAModule extends AttackModule {
-    public ProjectXANAModule(Main pl) {
+    public ProjectXANAModule() {
         super("ProjectXANACore","Sky");
-        pl.getNetwork().getXana().addAttackModule(new ProjectXANAModule());
         addAttack(new ExampleAttack());
     }
 }
