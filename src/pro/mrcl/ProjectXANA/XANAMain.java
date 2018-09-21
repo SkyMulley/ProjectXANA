@@ -5,7 +5,8 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
-import pro.mrcl.ProjectXANA.AttackLogic.ProjectXANAModule;
+import pro.mrcl.ProjectXANA.AttackLogic.LogicCore;
+import pro.mrcl.ProjectXANA.AttackLogic.LogicCore;
 import pro.mrcl.ProjectXANA.Commands.possess;
 
 public class XANAMain extends JavaPlugin {
@@ -14,7 +15,7 @@ public class XANAMain extends JavaPlugin {
     public void onEnable(){
         registerCommands();
         getLogger().info("ProjectXANA has booted up!");
-        pl.getNetwork().getXana().addAttackModule(new ProjectXANAModule());
+        pl.getNetwork().getXana().addAttackModule(new LogicCore());
     }
 
     @Override
