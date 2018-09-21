@@ -1,5 +1,5 @@
 name: ProjectXANA
-version: 0.1
+version: 1.0
 author: Sky, GoodOldJack12
 main: pro.mrcl.ProjectXANA.XANAMain
 depend: [ProjectCarthage]
