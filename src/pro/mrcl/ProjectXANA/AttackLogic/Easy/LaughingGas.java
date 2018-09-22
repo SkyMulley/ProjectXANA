@@ -100,6 +100,7 @@ public class LaughingGas extends AbstractAttack {
     @Override
     public boolean stopAttack() {
         towerAttack.stopAttack();
+        unregisterListeners();
         super.stopAttack();
         return true;
     }

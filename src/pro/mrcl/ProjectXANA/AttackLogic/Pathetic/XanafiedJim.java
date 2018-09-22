@@ -41,6 +41,7 @@ public class XanafiedJim extends AbstractAttack {
     @Override
     public boolean stopAttack() {
         towerAttack.stopAttack();
+        unregisterListeners();
         super.stopAttack();
         //removeblockshere
         return true;
