@@ -27,7 +27,6 @@ public class XanafiedJim extends AbstractAttack {
                 public void onAttackEnd(AttackEndEvent AEE) {
                     if (AEE.getAttack().equals(towerAttack)) {
                         stopAttack();
-                        //removeblockshere
                     }
                 }
             });
@@ -37,5 +36,13 @@ public class XanafiedJim extends AbstractAttack {
             Bukkit.getLogger().info("[PRX] Something went wrong while running a XanafiedJim attack: " + e);
             return true;
         }
+
+    }
+    @Override
+    public boolean stopAttack() {
+        towerAttack.stopAttack();
+        super.stopAttack();
+        //removeblockshere
+        return true;
     }
 }
