@@ -14,8 +14,8 @@ public class XANAMain extends JavaPlugin {
     @Override
     public void onEnable(){
         registerCommands();
+        getPRC();
         getLogger().info("ProjectXANA has booted up!");
-        pl.getNetwork().getXana().addAttackModule(new LogicCore());
     }
 
     @Override
@@ -26,5 +26,10 @@ public class XANAMain extends JavaPlugin {
     private void registerCommands(){
         Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
         this.getCommand("possess").setExecutor(new possess(pl));
+    }
+
+    private void getPRC(){
+        Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
+        pl.getNetwork().getXana().addAttackModule(new LogicCore());
     }
 }
