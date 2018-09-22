@@ -92,6 +92,7 @@ public class LaughingGas extends AbstractAttack {
             return true;
         } catch (Exception e) {
             Bukkit.getLogger().info("[PRX] Something went wrong while running a LaughingGas attack: " +e);
+            stopAttack();
             return true;
         }
     }
