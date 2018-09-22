@@ -7,7 +7,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 import pro.mrcl.ProjectXANA.AttackLogic.LogicCore;
 import pro.mrcl.ProjectXANA.AttackLogic.LogicCore;
-import pro.mrcl.ProjectXANA.Commands.possess;
 
 public class XANAMain extends JavaPlugin {
     private Main pl;
@@ -25,7 +24,7 @@ public class XANAMain extends JavaPlugin {
 
     private void registerCommands(){
         Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
-        this.getCommand("possess").setExecutor(new possess(pl));
+        //this.getCommand("possess").setExecutor(new possess(pl));
     }
 
     private void getPRC(){
