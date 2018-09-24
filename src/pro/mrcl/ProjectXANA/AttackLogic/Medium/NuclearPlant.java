@@ -25,6 +25,8 @@ public class NuclearPlant extends AbstractAttack {
         super(ATTACKDIFFICULTY.MEDIUM);
     }
     private boolean isTowerDeactivated;
+    private int counter;
+    private boolean rip;
     @Override
     public boolean startAttack() {
         try {
@@ -37,39 +39,42 @@ public class NuclearPlant extends AbstractAttack {
                 public void onAttackEnd(AttackEndEvent AEE) {
                     if (AEE.getAttack().equals(towerAttack)) {
                         stopAttack();
-                        isTowerDeactivated = false;
+                        isTowerDeactivated = true;
                     }
-                }
-            });
-            List<LyokoWarrior> lyokoWarriors = (List<LyokoWarrior>) Main.getMainInstance().getLyokoWarriors().values(); //get a list of all lyokowarriors
-            List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
-            lyokoWarriors.forEach(lyokoWarrior -> {
-                if (!lyokoWarrior.isRttpIgnored() && !lyokoWarrior.isXanafied()) {
-                    eligebleWarriors.add(lyokoWarrior); //if the warrior isnt virtualized, ignored or already xanafied
                 }
             });
             Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED +" High voltage detected in Electric Pylon 2HA, 15 minutes to Voltage Limit cross");
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+                @Override
                 public void run() {
                     if(isTowerDeactivated==false) {
-                        Bukkit.broadcastMessage("[Superscan]" +ChatColor.RED +" High voltage detected in Electric Pylon 2HA, 10 minutes to Voltage Limit cross");
+                        counter = counter + 1;
+                        if(counter==1) {
+                            Bukkit.broadcastMessage("[Superscan]" +ChatColor.RED +" High voltage detected in Electric Pylon 2HA, 10 minutes to Voltage Limit cross");
+                        }
+                        if(counter==2) {
+                            Bukkit.broadcastMessage("[Superscan]" +ChatColor.RED +" High voltage detected in Electric Pylon 2HA, 5 minutes to Voltage Limit cross");
+                        }
+                        if(counter==3) {
+                            Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Voltage in Electric Pylon 2HA at maximum capacity");
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    List<LyokoWarrior> lyokoWarriors = (List<LyokoWarrior>) Main.getMainInstance().getLyokoWarriors().values(); //get a list of all lyokowarriors
+                                    List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
+                                    lyokoWarriors.forEach(lyokoWarrior -> {
+                                        if (!lyokoWarrior.isRttpIgnored() && !lyokoWarrior.isXanafied()) {
+                                            eligebleWarriors.add(lyokoWarrior); //if the warrior isnt virtualized, ignored or already xanafied
+                                        }
+                                    });
+                                    //Make some sort of "kill everyone" logic (idk the way jack wants it)
+                                    stopAttack();
+                                }
+                            }, 1200L);
+                        }
                     }
                 }
-            }, 6000L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    if(isTowerDeactivated==false) {
-                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " High voltage detected in Electric Pylon 2HA, 5 minutes to Voltage Limit cross");
-                    }
-                }
-            }, 6000L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    if(isTowerDeactivated==false) {
-                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " High voltage detected in Electric Pylon 2HA, 5 minutes to Voltage Limit cross");
-                    }
-                }
-            }, 6000L);
+            }, 0L, 6000L);
             return true;
         } catch (Exception e) {
             Bukkit.getLogger().info("[PRX] Something went wrong while running a NuclearPlant attack: " +e);
