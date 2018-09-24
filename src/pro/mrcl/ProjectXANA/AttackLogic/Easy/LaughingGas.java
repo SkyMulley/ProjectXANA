@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import pro.mrcl.ProjectXANA.MiscLogic.EligibleWarriorSelect;
@@ -54,7 +55,7 @@ public class LaughingGas extends AbstractAttack {
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onVirtualization(VirtualizationEvent VE) {
-                    if(eligebleWarriors.contains(VE.getLyokoWarrior().getPlayer())) {
+                    if(eligebleWarriors.contains(VE.getLyokoWarrior())) {
                         VE.getLyokoWarrior().getPlayer().sendMessage(ChatColor.RED + "ERROR: Virtual Envelope Damaged, Deadly Devirt");
                         VE.getLyokoWarrior().setDeadlydevirt(true);
                     }
@@ -75,6 +76,16 @@ public class LaughingGas extends AbstractAttack {
                     if (!warrior.isRttpIgnored()) {
                         PJE.getPlayer().sendMessage(ChatColor.RED + "A smoke wafts around you and you start laughing uncontrollably..");
                         PJE.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 1, false));
+                        eligebleWarriors.add(warrior);
+                    }
+                }
+            });
+            registerListener(new org.bukkit.event.Listener() {
+                @EventHandler
+                public void onPlayerMove(PlayerMoveEvent PME) {
+                    LyokoWarrior warrior = pl.getLyokoWarriors().get(PME.getPlayer());
+                    if(eligebleWarriors.contains(warrior)) {
+                        PME.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 40, 1, false));
                     }
                 }
             });
