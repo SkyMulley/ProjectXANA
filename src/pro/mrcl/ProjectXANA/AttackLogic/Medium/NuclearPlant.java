@@ -11,6 +11,7 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
+import pro.mrcl.ProjectXANA.MiscLogic.DeathEvent;
 import pro.mrcl.ProjectXANA.MiscLogic.EligibleWarriorSelect;
 import pro.mrcl.ProjectXANA.XANAMain;
 
@@ -27,9 +28,7 @@ public class NuclearPlant extends AbstractAttack {
     }
     private boolean isTowerDeactivated;
     private int counter;
-    private boolean rip;
-    List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
-    private EligibleWarriorSelect ews;
+    private DeathEvent dex;
     @Override
     public boolean startAttack() {
         try {
@@ -63,8 +62,8 @@ public class NuclearPlant extends AbstractAttack {
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    eligebleWarriors = ews.EligibleWarriorVirt();
-                                    //Make some sort of "kill everyone" logic (idk the way jack wants it)
+                                    Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Detonation detected at Boulogne-Billancourt Nuclear Power Plant");
+                                    dex.DeathExecution();
                                     stopAttack();
                                 }
                             }, 1200L);
