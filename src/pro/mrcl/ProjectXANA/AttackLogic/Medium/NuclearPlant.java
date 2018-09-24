@@ -11,6 +11,7 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
+import pro.mrcl.ProjectXANA.MiscLogic.EligibleWarriorSelect;
 import pro.mrcl.ProjectXANA.XANAMain;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class NuclearPlant extends AbstractAttack {
     private boolean isTowerDeactivated;
     private int counter;
     private boolean rip;
+    List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
+    private EligibleWarriorSelect ews;
     @Override
     public boolean startAttack() {
         try {
@@ -60,13 +63,7 @@ public class NuclearPlant extends AbstractAttack {
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    List<LyokoWarrior> lyokoWarriors = (List<LyokoWarrior>) Main.getMainInstance().getLyokoWarriors().values(); //get a list of all lyokowarriors
-                                    List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
-                                    lyokoWarriors.forEach(lyokoWarrior -> {
-                                        if (!lyokoWarrior.isRttpIgnored() && !lyokoWarrior.isXanafied()) {
-                                            eligebleWarriors.add(lyokoWarrior); //if the warrior isnt virtualized, ignored or already xanafied
-                                        }
-                                    });
+                                    eligebleWarriors = ews.EligibleWarriorVirt();
                                     //Make some sort of "kill everyone" logic (idk the way jack wants it)
                                     stopAttack();
                                 }

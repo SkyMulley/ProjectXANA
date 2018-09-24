@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import pro.mrcl.ProjectXANA.MiscLogic.EligibleWarriorSelect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ public class LaughingGas extends AbstractAttack {
     private Tower tower = null;
     private SimpleActivationAttack towerAttack;
     private Main pl;
+    private EligibleWarriorSelect ews;
+    List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
     public LaughingGas() {
         super(ATTACKDIFFICULTY.EASY);
     }
@@ -43,13 +46,7 @@ public class LaughingGas extends AbstractAttack {
                     }
                 }
             });
-            List<LyokoWarrior> lyokoWarriors = (List<LyokoWarrior>) Main.getMainInstance().getLyokoWarriors().values(); //get a list of all lyokowarriors
-            List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
-            lyokoWarriors.forEach(lyokoWarrior -> {
-                if (!lyokoWarrior.isVirtualized() && !lyokoWarrior.isRttpIgnored() && !lyokoWarrior.isXanafied()) {
-                    eligebleWarriors.add(lyokoWarrior); //if the warrior isnt virtualized, ignored or already xanafied
-                }
-            });
+            eligebleWarriors = ews.EligibleWarrior();
             eligebleWarriors.forEach(eligebleWarrior -> {
                 eligebleWarrior.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 1, false));
                 eligebleWarrior.getPlayer().sendMessage(ChatColor.RED + "A smoke wafts around you and you start laughing uncontrollably..");
