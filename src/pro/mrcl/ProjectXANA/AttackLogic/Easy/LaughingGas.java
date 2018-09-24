@@ -65,10 +65,7 @@ public class LaughingGas extends AbstractAttack {
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onDevirtualization(DevirtualizationEvent DE) {
-                    if(DE.getLyokoWarrior().isDeadlydevirt()) {
-                        DE.getLyokoWarrior().frontier();
-                        eligebleWarriors.add(DE.getLyokoWarrior());
-                    }
+                    eligebleWarriors.add(DE.getLyokoWarrior());
                 }
             });
             registerListener(new org.bukkit.event.Listener() {
