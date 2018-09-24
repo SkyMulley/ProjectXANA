@@ -48,6 +48,7 @@ public class EligibleWarriorsCommand extends CarthageCommand {
                         return true;
                     }
                     if(!strings[1].equals("earth") || !strings[1].equals("full")) {
+                        commandSender.sendMessage("You must specify whether you are listing all players or just those on Earth!");
                         return false;
                     }
                 }
