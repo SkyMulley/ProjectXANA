@@ -58,6 +58,7 @@ public class LaughingGas extends AbstractAttack {
                     if(eligebleWarriors.contains(VE.getLyokoWarrior())) {
                         VE.getLyokoWarrior().getPlayer().sendMessage(ChatColor.RED + "ERROR: Virtual Envelope Damaged, Deadly Devirt");
                         VE.getLyokoWarrior().setDeadlydevirt(true);
+                        eligebleWarriors.remove(VE.getLyokoWarrior());
                     }
                 }
             });
@@ -66,6 +67,7 @@ public class LaughingGas extends AbstractAttack {
                 public void onDevirtualization(DevirtualizationEvent DE) {
                     if(DE.getLyokoWarrior().isDeadlydevirt()) {
                         DE.getLyokoWarrior().frontier();
+                        eligebleWarriors.add(DE.getLyokoWarrior());
                     }
                 }
             });
