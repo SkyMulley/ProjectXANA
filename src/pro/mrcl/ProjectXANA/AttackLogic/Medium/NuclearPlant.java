@@ -35,6 +35,7 @@ public class NuclearPlant extends AbstractAttack {
             this.plugin = plugin;
             towerAttack = new SimpleActivationAttack();
             towerAttack.startAttack();
+            super.startAttack();
             isTowerDeactivated = false;
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler

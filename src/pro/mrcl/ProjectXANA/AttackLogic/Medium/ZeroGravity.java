@@ -41,6 +41,7 @@ public class ZeroGravity extends AbstractAttack {
     @Override
     public boolean startAttack() {
         try {
+            super.startAttack();
             this.plugin = plugin;
             towerAttack = new SimpleActivationAttack();
             towerAttack.startAttack();

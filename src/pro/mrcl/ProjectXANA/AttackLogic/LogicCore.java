@@ -8,7 +8,7 @@ import pro.mrcl.ProjectXANA.AttackLogic.Medium.ZeroGravity;
 
 public class LogicCore extends AttackModule {
     public LogicCore() {
-        super("ProjectXANACore","Sky");
+        super("PRXCore","Sky");
         addAttack(new LaughingGas());
         addAttack(new NuclearPlant());
     }

@@ -42,6 +42,7 @@ public class Satellite extends AbstractAttack {
     @Override
     public boolean startAttack() {
         try {
+            super.startAttack();
             towerAttack = new SimpleActivationAttack();
             towerAttack.startAttack();
             registerListener(new org.bukkit.event.Listener() {
