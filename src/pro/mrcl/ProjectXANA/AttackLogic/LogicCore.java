@@ -11,6 +11,5 @@ public class LogicCore extends AttackModule {
         super("ProjectXANACore","Sky");
         addAttack(new LaughingGas());
         addAttack(new NuclearPlant());
-        addAttack(new ZeroGravity());
     }
 }
