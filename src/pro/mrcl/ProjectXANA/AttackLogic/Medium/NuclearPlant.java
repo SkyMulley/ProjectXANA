@@ -1,6 +1,10 @@
 package pro.mrcl.ProjectXANA.AttackLogic.Medium;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.TowerEvents.TowerDeactivationEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.BrokenInteractorException;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.InteractorDoesNotExistException;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.NoAnnexInteractorException;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
@@ -33,14 +37,13 @@ public class NuclearPlant extends AbstractAttack {
     public boolean startAttack() {
         try {
             this.plugin = plugin;
-            towerAttack = new SimpleActivationAttack();
-            towerAttack.startAttack();
+            tower = Main.getMainInstance().getNetwork().getAnnex().activateRandom();
             super.startAttack();
             isTowerDeactivated = false;
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
-                public void onAttackEnd(AttackEndEvent AEE) {
-                    if (AEE.getAttack().equals(towerAttack)) {
+                public void onAttackEnd(TowerDeactivationEvent AEE) {
+                    if (AEE.getTower().equals(tower)) {
                         stopAttack();
                         isTowerDeactivated = true;
                     }
@@ -82,9 +85,16 @@ public class NuclearPlant extends AbstractAttack {
 
     @Override
     public boolean stopAttack() {
-        towerAttack.stopAttack();
-        unregisterListeners();
         super.stopAttack();
-        return true;
+        try {
+            unregisterListeners();
+            tower.deactivate();
+            return true;
+        } catch (Tower.AlreadyDeactivatedException e) {
+            return true;
+        } catch (BrokenInteractorException | NoAnnexInteractorException | InteractorDoesNotExistException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

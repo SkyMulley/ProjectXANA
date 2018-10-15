@@ -4,6 +4,10 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Listener;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.LyokoWarriorEvents.DevirtualizationEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.LyokoWarriorEvents.VirtualizationEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.TowerEvents.TowerDeactivationEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.BrokenInteractorException;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.InteractorDoesNotExistException;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.NoAnnexInteractorException;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
@@ -26,7 +30,6 @@ import java.util.List;
 
 public class LaughingGas extends AbstractAttack {
     private Tower tower = null;
-    private SimpleActivationAttack towerAttack;
     private Main pl;
     private EligibleWarriorSelect ews;
     List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
@@ -37,13 +40,11 @@ public class LaughingGas extends AbstractAttack {
     @Override
     public boolean startAttack() {
         try {
-            super.startAttack();
-            towerAttack = new SimpleActivationAttack();
-            towerAttack.startAttack();
+            tower = Main.getMainInstance().getNetwork().getAnnex().activateRandom();
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
-                public void onAttackEnd(AttackEndEvent AEE) {
-                    if (AEE.getAttack().equals(towerAttack)) {
+                public void onAttackEnd(TowerDeactivationEvent AEE) {
+                    if (AEE.getTower().equals(tower)) {
                         stopAttack();
                     }
                 }
@@ -107,9 +108,16 @@ public class LaughingGas extends AbstractAttack {
 
     @Override
     public boolean stopAttack() {
-        towerAttack.stopAttack();
-        unregisterListeners();
-        super.stopAttack();
-        return true;
+        Bukkit.getLogger().info("[PRX] stopAttack has been called");
+        try {
+            unregisterListeners();
+            tower.deactivate();
+            return true;
+        } catch (Tower.AlreadyDeactivatedException e) {
+            return true;
+        } catch (BrokenInteractorException | NoAnnexInteractorException | InteractorDoesNotExistException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
