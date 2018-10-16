@@ -1,4 +1,4 @@
-package pro.mrcl.ProjectXANA.AttackLogic.Medium;
+package pro.mrcl.ProjectXANA.AttackLogic.Depreciated;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.LyokoWarriorEvents.DevirtualizationEvent;
@@ -10,10 +10,9 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATT
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.VirtualStructures.Tower;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
+import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -27,22 +26,23 @@ import pro.mrcl.ProjectXANA.XANAMain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZeroGravity extends AbstractAttack {
+public class Satellite extends AbstractAttack {
     private Tower tower = null;
     private SimpleActivationAttack towerAttack;
+    private EligibleWarriorSelect ews;
     private Main pl;
     private DeathEvent DE;
-    private EligibleWarriorSelect ews;
     private XANAMain plugin;
     List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
-    public ZeroGravity() {
-        super(ATTACKDIFFICULTY.MEDIUM);
+
+    public Satellite() {
+        super(ATTACKDIFFICULTY.EASY);
     }
+
     @Override
     public boolean startAttack() {
         try {
             super.startAttack();
-            this.plugin = plugin;
             towerAttack = new SimpleActivationAttack();
             towerAttack.startAttack();
             registerListener(new org.bukkit.event.Listener() {
@@ -91,7 +91,9 @@ public class ZeroGravity extends AbstractAttack {
                                     @Override
                                     public void run() {
                                         if(loc.getBlock().getType() == Material.AIR) {
-                                            PME.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 100, 1, false));
+                                            World world = PME.getPlayer().getWorld();
+                                            Location location = PME.getPlayer().getLocation();
+                                            world.strikeLightning(location);
                                         }
                                     }
                                 }, 600L);
@@ -111,8 +113,8 @@ public class ZeroGravity extends AbstractAttack {
                 }
             });
             return true;
-        } catch (Exception e) {
-            Bukkit.getLogger().info("[PRX] Something went wrong while running a ZeroGravity attack: " + e);
+        } catch(Exception e) {
+            Bukkit.getLogger().info("[PRX] Something went wrong while running a Satellite attack: " +e);
             stopAttack();
             return true;
         }
