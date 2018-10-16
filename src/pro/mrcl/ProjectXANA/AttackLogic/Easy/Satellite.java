@@ -1,39 +1,31 @@
 package pro.mrcl.ProjectXANA.AttackLogic.Easy;
 
-import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.LyokoWarriorEvents.DevirtualizationEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.LyokoWarriorEvents.VirtualizationEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.TowerEvents.TowerDeactivationEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.BrokenInteractorException;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.InteractorDoesNotExistException;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.NoAnnexInteractorException;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
-import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.VirtualStructures.Tower;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import pro.mrcl.ProjectXANA.MiscLogic.DeathEvent;
-import pro.mrcl.ProjectXANA.MiscLogic.EligibleWarriorSelect;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitScheduler;
 import pro.mrcl.ProjectXANA.XANAMain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Satellite extends AbstractAttack {
-    private Tower tower = null;
-    private SimpleActivationAttack towerAttack;
-    private EligibleWarriorSelect ews;
-    private Main pl;
-    private DeathEvent DE;
-    private XANAMain plugin;
+    private Tower tower;
     List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
+    private XANAMain plugin;
+    private Main pl;
 
     public Satellite() {
         super(ATTACKDIFFICULTY.EASY);
@@ -42,18 +34,24 @@ public class Satellite extends AbstractAttack {
     @Override
     public boolean startAttack() {
         try {
-            super.startAttack();
-            towerAttack = new SimpleActivationAttack();
-            towerAttack.startAttack();
+            this.plugin = plugin;
+            tower = Main.getMainInstance().getNetwork().getAnnex().activateRandom();
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
-                public void onAttackEnd(AttackEndEvent AEE) {
-                    if (AEE.getAttack().equals(towerAttack)) {
-                        stopAttack();
+                public void onAttackEnd(TowerDeactivationEvent AEE) {
+                    if (AEE.getTower().equals(tower)) {
+                        Bukkit.getScheduler().runTaskLater(Main.getMainInstance(), () -> stopAttack(), 20L);
                     }
                 }
             });
-            eligebleWarriors = ews.EligibleWarrior();
+            List<LyokoWarrior> lyokoWarriors = new ArrayList<>();
+            lyokoWarriors.addAll(Main.getMainInstance().getLyokoWarriors().values()); //get a list of all lyokowarriors
+            List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
+            lyokoWarriors.forEach(lyokoWarrior -> {
+                if (!lyokoWarrior.isVirtualized() && !lyokoWarrior.isRttpIgnored() && !lyokoWarrior.isXanafied()) {
+                    eligebleWarriors.add(lyokoWarrior); //if the warrior isnt virtualized, ignored or already xanafied
+                }
+            });
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onPlayerJoin(PlayerJoinEvent PJE) {
@@ -81,37 +79,20 @@ public class Satellite extends AbstractAttack {
             });
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
-                public void onPlayerMove(PlayerMoveEvent PME) {
-                    LyokoWarrior warrior = pl.getLyokoWarriors().get(PME.getPlayer());
+                public void onPlayerLeave(PlayerQuitEvent PQE) {
+                    LyokoWarrior warrior = pl.getLyokoWarriors().get(PQE.getPlayer());
                     if(eligebleWarriors.contains(warrior)) {
-                        Location loc = PME.getPlayer().getEyeLocation().add(0,1,0);
-                        while(loc.getY() < 256) {
-                            if(loc.getBlock().getType() == Material.AIR) {
-                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if(loc.getBlock().getType() == Material.AIR) {
-                                            World world = PME.getPlayer().getWorld();
-                                            Location location = PME.getPlayer().getLocation();
-                                            world.strikeLightning(location);
-                                        }
-                                    }
-                                }, 600L);
-                            }
-                        }
+                        eligebleWarriors.remove(warrior);
                     }
                 }
             });
-            registerListener(new org.bukkit.event.Listener() {
-                @EventHandler
-                public void onPlayerDeath(PlayerDeathEvent PDE) {
-                    LyokoWarrior warrior = pl.getLyokoWarriors().get(PDE.getEntity());
-                    if(!warrior.isVirtualized()) {
-                        warrior.getPlayer().setHealth(20);
-                        //Send player to death point here
-                    }
+            BukkitScheduler scheduler = plugin.getServer().getScheduler();
+            scheduler.scheduleSyncRepeatingTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+
                 }
-            });
+            }, 0L, 20*60L);
             return true;
         } catch(Exception e) {
             Bukkit.getLogger().info("[PRX] Something went wrong while running a Satellite attack: " +e);
@@ -119,11 +100,19 @@ public class Satellite extends AbstractAttack {
             return true;
         }
     }
+
     @Override
     public boolean stopAttack() {
-        towerAttack.stopAttack();
-        unregisterListeners();
-        super.stopAttack();
-        return true;
+        Bukkit.getLogger().info("[PRX] stopAttack has been called");
+        try {
+            unregisterListeners();
+            tower.deactivate();
+            return true;
+        } catch (Tower.AlreadyDeactivatedException e) {
+            return true;
+        } catch (BrokenInteractorException | NoAnnexInteractorException | InteractorDoesNotExistException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
