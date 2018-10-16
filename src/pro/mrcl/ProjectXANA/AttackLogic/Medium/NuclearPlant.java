@@ -38,13 +38,12 @@ public class NuclearPlant extends AbstractAttack {
         try {
             this.plugin = plugin;
             tower = Main.getMainInstance().getNetwork().getAnnex().activateRandom();
-            super.startAttack();
             isTowerDeactivated = false;
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onAttackEnd(TowerDeactivationEvent AEE) {
                     if (AEE.getTower().equals(tower)) {
-                        stopAttack();
+                        Bukkit.getScheduler().runTaskLater(Main.getMainInstance(), () -> stopAttack(), 20L);
                         isTowerDeactivated = true;
                     }
                 }
@@ -66,9 +65,11 @@ public class NuclearPlant extends AbstractAttack {
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Detonation detected at Boulogne-Billancourt Nuclear Power Plant");
-                                    dex.DeathExecution();
-                                    stopAttack();
+                                    if(!isTowerDeactivated) {
+                                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Detonation detected at Boulogne-Billancourt Nuclear Power Plant");
+                                        Bukkit.broadcastMessage("Basically you're dead now, but I'm lazy and haven;t finished making this attack yet");
+                                        stopAttack();
+                                    }
                                 }
                             }, 1200L);
                         }
@@ -85,7 +86,6 @@ public class NuclearPlant extends AbstractAttack {
 
     @Override
     public boolean stopAttack() {
-        super.stopAttack();
         try {
             unregisterListeners();
             tower.deactivate();

@@ -27,12 +27,13 @@ import pro.mrcl.ProjectXANA.MiscLogic.EligibleWarriorSelect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LaughingGas extends AbstractAttack {
     private Tower tower = null;
     private Main pl;
-    private EligibleWarriorSelect ews;
-    List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
+    private Timer timer;
     public LaughingGas() {
         super(ATTACKDIFFICULTY.EASY);
     }
@@ -45,13 +46,21 @@ public class LaughingGas extends AbstractAttack {
                 @EventHandler
                 public void onAttackEnd(TowerDeactivationEvent AEE) {
                     if (AEE.getTower().equals(tower)) {
-                        stopAttack();
+                        timer.cancel();
+                        Bukkit.getScheduler().runTaskLater(Main.getMainInstance(), () -> stopAttack(), 20L);
                     }
                 }
             });
-            eligebleWarriors = ews.EligibleWarrior();
+            List<LyokoWarrior> lyokoWarriors = new ArrayList<>();
+            lyokoWarriors.addAll(Main.getMainInstance().getLyokoWarriors().values()); //get a list of all lyokowarriors
+            List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
+            lyokoWarriors.forEach(lyokoWarrior -> {
+                if (!lyokoWarrior.isVirtualized() && !lyokoWarrior.isRttpIgnored() && !lyokoWarrior.isXanafied()) {
+                    eligebleWarriors.add(lyokoWarrior); //if the warrior isnt virtualized, ignored or already xanafied
+                }
+            });
             eligebleWarriors.forEach(eligebleWarrior -> {
-                eligebleWarrior.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 1, false));
+                eligebleWarrior.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 250, 1, true));
                 eligebleWarrior.getPlayer().sendMessage(ChatColor.RED + "A smoke wafts around you and you start laughing uncontrollably..");
             });
             registerListener(new org.bukkit.event.Listener() {
@@ -76,17 +85,8 @@ public class LaughingGas extends AbstractAttack {
                     LyokoWarrior warrior = pl.getLyokoWarriors().get(PJE.getPlayer());
                     if (!warrior.isRttpIgnored()) {
                         PJE.getPlayer().sendMessage(ChatColor.RED + "A smoke wafts around you and you start laughing uncontrollably..");
-                        PJE.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 1, false));
+                        PJE.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 250, 1, true));
                         eligebleWarriors.add(warrior);
-                    }
-                }
-            });
-            registerListener(new org.bukkit.event.Listener() {
-                @EventHandler
-                public void onPlayerMove(PlayerMoveEvent PME) {
-                    LyokoWarrior warrior = pl.getLyokoWarriors().get(PME.getPlayer());
-                    if(eligebleWarriors.contains(warrior)) {
-                        PME.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 40, 1, false));
                     }
                 }
             });
@@ -98,6 +98,16 @@ public class LaughingGas extends AbstractAttack {
                     }
                 }
             });
+            timer = new Timer();
+            TimerTask tt = new TimerTask() {
+                public void run() {
+                    eligebleWarriors.forEach(eligebleWarrior -> {
+                        eligebleWarrior.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 250, 1, true));
+                        eligebleWarrior.getPlayer().sendMessage(ChatColor.RED + "A smoke wafts around you and you start laughing uncontrollably..");
+                    });
+                }
+            };
+            timer.schedule(tt, 1,30);
             return true;
         } catch (Exception e) {
             Bukkit.getLogger().info("[PRX] Something went wrong while running a LaughingGas attack: " +e);
