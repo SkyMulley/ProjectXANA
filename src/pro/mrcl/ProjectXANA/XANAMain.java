@@ -1,12 +1,9 @@
 package pro.mrcl.ProjectXANA;
 
-import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AttackModule;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Team;
-import pro.mrcl.ProjectXANA.AttackLogic.LogicCore;
-import pro.mrcl.ProjectXANA.AttackLogic.LogicCore;
+import pro.mrcl.ProjectXANA.Attacks.LogicCore;
 
 public class XANAMain extends JavaPlugin {
     private Main pl;
@@ -23,7 +20,6 @@ public class XANAMain extends JavaPlugin {
     }
 
     private void registerCommands(){
-        Main pl = (Main) Bukkit.getPluginManager().getPlugin("ProjectCarthage");
         //this.getCommand("possess").setExecutor(new possess(pl));
     }
 

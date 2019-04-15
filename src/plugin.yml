@@ -1,15 +1,7 @@
 name: ProjectXANA
 version: 1.0
-author: Sky, GoodOldJack12
+author: Sky
 main: pro.mrcl.ProjectXANA.XANAMain
 depend: [ProjectCarthage]
 load: POSTWORLD
 website: www.mrcl.pro
-api-version: 1.12
-commands:
-  possess:
-    description: Sets target under the control of XANA
-    permission: ProjectXANA.possess
-  release:
-    description: Releases target from the control of XANA
-    permission: ProjectXANA.release
