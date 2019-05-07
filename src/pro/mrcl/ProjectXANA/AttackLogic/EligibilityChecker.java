@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EligibilityChecker {
-    public List<LyokoWarrior> getNonVirtedEligiblePlayers() {
+    public static List<LyokoWarrior> getNonVirtedEligiblePlayers() {
         List<LyokoWarrior> lyokoWarriors = new ArrayList<>();
         lyokoWarriors.addAll(Main.getMainInstance().getLyokoWarriors().values()); //get a list of all lyokowarriors
         List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
@@ -20,7 +20,7 @@ public class EligibilityChecker {
         return eligebleWarriors;
     }
 
-    public List<LyokoWarrior> getAllEligiblePlayers() {
+    public static List<LyokoWarrior> getAllEligiblePlayers() {
         List<LyokoWarrior> lyokoWarriors = new ArrayList<>();
         lyokoWarriors.addAll(Main.getMainInstance().getLyokoWarriors().values()); //get a list of all lyokowarriors
         List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
