@@ -1,13 +1,16 @@
 package pro.mrcl.ProjectXANA.Attacks.Medium;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import pro.mrcl.ProjectXANA.AttackLogic.EligibilityChecker;
 
 public class NuclearPlant extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
@@ -54,7 +57,11 @@ public class NuclearPlant extends AbstractAttack {
                             @Override
                             public void run() {
                                 Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Detonation detected at Boulogne-Billancourt Nuclear Power Plant");
-                                //Death goes here big boom
+                                for(Player player : Bukkit.getOnlinePlayers()) {
+                                    if(EligibilityChecker.getNonVirtedEligiblePlayers().contains(player)) {
+                                        player.setHealth(0);
+                                    }
+                                }
                                 stopAttack();
                             }
                         }, 1200L);
