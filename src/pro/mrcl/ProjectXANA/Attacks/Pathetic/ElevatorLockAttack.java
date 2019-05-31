@@ -4,14 +4,8 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEn
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
-import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
-import net.minecraft.server.v1_13_R2.CommandSay;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
-import org.bukkit.scheduler.BukkitScheduler;
-
-import static org.bukkit.Bukkit.getServer;
 
 public class ElevatorLockAttack extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
@@ -32,7 +26,11 @@ public class ElevatorLockAttack extends AbstractAttack {
                     }
                 }
             });
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled yes");
+            if(Bukkit.getWorld("newkadic").getBlockAt(9,40,-346).isBlockPowered()) {
+                safeStopAttack();
+            } else {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "elevator edit factory disabled yes");
+            }
         }
         return false;
     }
