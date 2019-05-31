@@ -11,6 +11,7 @@ public class XANAMain extends JavaPlugin {
     public void onEnable(){
         registerCommands();
         getPRC();
+        getServer().getPluginManager().registerEvents(new Listener(),this);
         getLogger().info("ProjectXANA has booted up!");
     }
 
