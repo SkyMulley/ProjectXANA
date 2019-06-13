@@ -4,7 +4,9 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Attack
 import pro.mrcl.ProjectXANA.Attacks.Hard.GroupXanafication;
 import pro.mrcl.ProjectXANA.Attacks.Medium.NuclearPlant;
 import pro.mrcl.ProjectXANA.Attacks.Medium.RTTPAttack;
+import pro.mrcl.ProjectXANA.Attacks.Pathetic.BuggedScanner;
 import pro.mrcl.ProjectXANA.Attacks.Pathetic.ElevatorLockAttack;
+import pro.mrcl.ProjectXANA.Attacks.Pathetic.LostMaze;
 
 public class LogicCore extends AttackModule {
     public LogicCore() {
@@ -12,5 +14,7 @@ public class LogicCore extends AttackModule {
         addAttack(new RTTPAttack());
         addAttack(new NuclearPlant());
         addAttack(new GroupXanafication());
+        addAttack(new LostMaze());
+        addAttack(new BuggedScanner());
     }
 }
