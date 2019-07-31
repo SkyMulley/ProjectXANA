@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import static org.bukkit.Bukkit.getServer;
+import static org.bukkit.Bukkit.savePlayers;
 
 public class ElevatorLockAttack extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
@@ -32,6 +33,13 @@ public class ElevatorLockAttack extends AbstractAttack {
                     }
                 }
             });
+            try {
+                if (!Main.getMainInstance().getNetwork().getVWorld("Lyoko").getScannerGroup().getEmptyScanner().isPowered()) {
+                    safeStopAttack();
+                }
+            }catch (Exception e) {
+                safeStopAttack();
+            }
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled yes");
         }
         return false;
