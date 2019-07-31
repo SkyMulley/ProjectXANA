@@ -1,9 +1,11 @@
 package pro.mrcl.ProjectXANA.Attacks.Pathetic;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.LyokoWarriorEvents.MidVirtEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 
 public class BuggedScanner extends AbstractAttack {
@@ -29,8 +31,9 @@ public class BuggedScanner extends AbstractAttack {
             });
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
-                public void onMidVirt() {
-
+                public void onMidVirt(MidVirtEvent event) {
+                    event.getScannerGroup().setDestinationSector(event.getScannerGroup().getVirtualWorld().getRandomSector());
+                    event.getLyokoWarrior().getPlayer().sendMessage(ChatColor.RED+"There seems to be an issue with the scanner, who knows what could of messed up!");
                 }
             });
         }
