@@ -28,7 +28,7 @@ public class BadWeatherAttack extends AbstractAttack {
             towerAttack = new SimpleActivationAttack();
             towerAttack.startAttack();
             Bukkit.getWorld("NewKadic").setStorm(true);
-            Bukkit.getWorld("NewKadic").setThunderDuration(999999999);
+            Bukkit.getWorld("NewKadic").setThunderDuration(1200);
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onAttackEnd(AttackEndEvent e) {
