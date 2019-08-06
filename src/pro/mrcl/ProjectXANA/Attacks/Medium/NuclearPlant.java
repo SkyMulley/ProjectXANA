@@ -59,7 +59,8 @@ public class NuclearPlant extends AbstractAttack {
                                 Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Detonation detected at Boulogne-Billancourt Nuclear Power Plant");
                                 for(Player player : Bukkit.getOnlinePlayers()) {
                                     if(EligibilityChecker.getNonVirtedEligiblePlayers().contains(player)) {
-                                        player.setHealth(0);
+                                        player.sendMessage(ChatColor.RED+"You have failed to beat XANA and died...");
+                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"warp FrontierDeath "+player.getName());
                                     }
                                 }
                                 stopAttack();
