@@ -39,7 +39,7 @@ public class NuclearPlant extends AbstractAttack {
                 }
             });
             Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED +" High voltage detected in Electric Pylon 2HA, 15 minutes to Voltage Limit cross");
-            counter = 0;
+            counter = -1;
             attackID2 = 0;
             attackID1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getMainInstance(), new Runnable() {
                 @Override
@@ -58,7 +58,7 @@ public class NuclearPlant extends AbstractAttack {
                             public void run() {
                                 Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Detonation detected at Boulogne-Billancourt Nuclear Power Plant");
                                 for(Player player : Bukkit.getOnlinePlayers()) {
-                                    if(EligibilityChecker.getNonVirtedEligiblePlayers().contains(player)) {
+                                    if(EligibilityChecker.getAllEligiblePlayers().contains(player)) {
                                         player.sendMessage(ChatColor.RED+"You have failed to beat XANA and died...");
                                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"warp FrontierDeath "+player.getName());
                                     }
@@ -72,5 +72,12 @@ public class NuclearPlant extends AbstractAttack {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean stopAttack() {
+        super.stopAttack();
+        Bukkit.getScheduler().cancelTask(attackID1);
+        return true;
     }
 }
