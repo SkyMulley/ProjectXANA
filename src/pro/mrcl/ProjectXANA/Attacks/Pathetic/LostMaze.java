@@ -38,6 +38,7 @@ public class LostMaze extends AbstractAttack {
                 @EventHandler
                 public void onMidVirt(MidVirtEvent event) {
                     try {
+                        event.getLyokoWarrior().getPlayer().playSound(event.getLyokoWarrior().getPlayer().getLocation(),"alarm",1000,1);
                         event.getScannerGroup().setDestinationSector(event.getScannerGroup().getVirtualWorld().findSector(SECTORTYPE.CARTHAGE));
                         event.getLyokoWarrior().getPlayer().sendMessage(ChatColor.RED+"There seems to be an issue with the scanner, who knows what could of messed up!");
                     }catch (SectorDoesNotExistException e) {

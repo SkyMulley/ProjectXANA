@@ -32,6 +32,7 @@ public class BuggedScanner extends AbstractAttack {
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onMidVirt(MidVirtEvent event) {
+                    event.getLyokoWarrior().getPlayer().playSound(event.getLyokoWarrior().getPlayer().getLocation(),"alarm",1000,1);
                     event.getScannerGroup().setDestinationSector(event.getScannerGroup().getVirtualWorld().getRandomSector());
                     event.getLyokoWarrior().getPlayer().sendMessage(ChatColor.RED+"There seems to be an issue with the scanner, who knows what could of messed up!");
                 }
