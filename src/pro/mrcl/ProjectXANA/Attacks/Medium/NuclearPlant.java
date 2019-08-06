@@ -60,6 +60,7 @@ public class NuclearPlant extends AbstractAttack {
                                 for(Player player : Bukkit.getOnlinePlayers()) {
                                     if(EligibilityChecker.getAllEligiblePlayers().contains(player)) {
                                         player.sendMessage(ChatColor.RED+"You have failed to beat XANA and died...");
+                                        Main.getMainInstance().getLyokoWarriors().get(player).removetags();
                                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"warp FrontierDeath "+player.getName());
                                     }
                                 }
