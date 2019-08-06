@@ -65,7 +65,7 @@ public class NuclearPlant extends AbstractAttack {
                                 }
                                 stopAttack();
                             }
-                        }, 1200L);
+                        }, 300L);
                     }
                 }
             }, 0L, 6000L);
