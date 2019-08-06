@@ -1,40 +1,49 @@
 package pro.mrcl.ProjectXANA.Attacks.Pathetic;
 
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Abstract.SECTORTYPE;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.LyokoWarriorEvents.MidVirtEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.SectorDoesNotExistException;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AttackModule;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
-import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Difficulty;
 import org.bukkit.event.EventHandler;
 
-public class ElevatorLockAttack extends AbstractAttack {
+public class LostMaze extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    public ElevatorLockAttack() { super(ATTACKDIFFICULTY.PATHEHTIC);}
+    public LostMaze() {
+        super(ATTACKDIFFICULTY.PATHEHTIC);
+    }
 
     @Override
     public boolean startAttack() {
         boolean wasActivated = isActivated();
         super.startAttack();
-        if (!wasActivated) {
+        if(!wasActivated) {
             towerAttack = new SimpleActivationAttack();
             towerAttack.startAttack();
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onAttackEnd(AttackEndEvent e) {
-                    if (e.getAttack().equals(towerAttack)) {
+                    if(e.getAttack().equals(towerAttack)) {
                         safeStopAttack();
                     }
                 }
             });
-            try {
-                if (!Main.getMainInstance().getNetwork().getVWorld("Lyoko").getScannerGroup().getEmptyScanner().isPowered()) {
-                    safeStopAttack();
+            registerListener(new org.bukkit.event.Listener() {
+                @EventHandler
+                public void onMidVirt(MidVirtEvent event) {
+                    try {
+                        event.getScannerGroup().setDestinationSector(event.getScannerGroup().getVirtualWorld().findSector(SECTORTYPE.CARTHAGE));
+                    }catch (SectorDoesNotExistException e) {
+                        safeStopAttack();
+                    }
                 }
-            }catch (Exception e) {
-                safeStopAttack();
-            }
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled yes");
+            });
         }
         return false;
     }
@@ -42,7 +51,6 @@ public class ElevatorLockAttack extends AbstractAttack {
     @Override
     public boolean stopAttack() {
         super.stopAttack();
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled no");
         return true;
     }
 }
