@@ -19,7 +19,7 @@ public class GroupXanafication extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
     private List<LyokoWarrior> xanafiedWarriors = new ArrayList<>();
 
-    public GroupXanafication() {super(ATTACKDIFFICULTY.HARD);}
+    public GroupXanafication() {super(ATTACKDIFFICULTY.FROMHARD);}
 
     @Override
     public boolean startAttack() {

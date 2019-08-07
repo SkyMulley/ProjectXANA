@@ -16,7 +16,7 @@ import org.bukkit.event.EventHandler;
 public class LostMaze extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
     public LostMaze() {
-        super(ATTACKDIFFICULTY.PATHEHTIC);
+        super(ATTACKDIFFICULTY.FROMEASY);
     }
 
     @Override

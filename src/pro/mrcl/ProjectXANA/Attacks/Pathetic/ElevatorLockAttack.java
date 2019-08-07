@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler;
 
 public class ElevatorLockAttack extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    public ElevatorLockAttack() { super(ATTACKDIFFICULTY.PATHEHTIC);}
+    public ElevatorLockAttack() { super(ATTACKDIFFICULTY.FROMEASY);}
 
     @Override
     public boolean startAttack() {

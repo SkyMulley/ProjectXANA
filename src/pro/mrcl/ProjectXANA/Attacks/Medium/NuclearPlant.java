@@ -18,7 +18,7 @@ public class NuclearPlant extends AbstractAttack {
     int attackID1;
     int attackID2;
     public NuclearPlant() {
-        super(ATTACKDIFFICULTY.MEDIUM);
+        super(ATTACKDIFFICULTY.FROMMEDIUM);
     }
 
     @Override

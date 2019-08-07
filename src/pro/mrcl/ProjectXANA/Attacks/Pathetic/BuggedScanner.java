@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler;
 public class BuggedScanner extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
     public BuggedScanner() {
-        super(ATTACKDIFFICULTY.PATHEHTIC);
+        super(ATTACKDIFFICULTY.FROMEASY);
     }
 
     @Override

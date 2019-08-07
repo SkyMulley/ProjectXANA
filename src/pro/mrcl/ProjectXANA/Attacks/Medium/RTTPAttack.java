@@ -15,7 +15,7 @@ import static org.bukkit.Bukkit.getServer;
 public class RTTPAttack extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
     private int attackID;
-    public RTTPAttack() { super(ATTACKDIFFICULTY.MEDIUM);}
+    public RTTPAttack() { super(ATTACKDIFFICULTY.FROMMEDIUM);}
 
     @Override
     public boolean startAttack() {

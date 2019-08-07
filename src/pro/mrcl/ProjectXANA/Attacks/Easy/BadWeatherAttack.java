@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class BadWeatherAttack extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    public BadWeatherAttack() { super(ATTACKDIFFICULTY.EASY);}
+    public BadWeatherAttack() { super(ATTACKDIFFICULTY.FROMEASY);}
 
     @Override
     public boolean startAttack() {
