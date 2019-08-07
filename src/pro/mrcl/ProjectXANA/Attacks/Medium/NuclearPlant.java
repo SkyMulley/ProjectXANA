@@ -58,7 +58,7 @@ public class NuclearPlant extends AbstractAttack {
                             public void run() {
                                 Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Detonation detected at Boulogne-Billancourt Nuclear Power Plant");
                                 for(Player player : Bukkit.getOnlinePlayers()) {
-                                    if(EligibilityChecker.getAllEligiblePlayers().contains(player)) {
+                                    if(!Main.getMainInstance().getLyokoWarriors().get(player).isXanaIgnored()) {
                                         player.sendMessage(ChatColor.RED+"You have failed to beat XANA and died...");
                                         Main.getMainInstance().getLyokoWarriors().get(player).removetags();
                                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"warp FrontierDeath "+player.getName());
