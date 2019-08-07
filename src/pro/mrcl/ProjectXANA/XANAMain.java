@@ -13,6 +13,8 @@ public class XANAMain extends JavaPlugin {
         getPRC();
         getServer().getPluginManager().registerEvents(new Listener(),this);
         getLogger().info("ProjectXANA has booted up!");
+        Bukkit.getWorld("NewKadic").setStorm(false);
+        Bukkit.getWorld("NewKadic").setThundering(false);
     }
 
     @Override
