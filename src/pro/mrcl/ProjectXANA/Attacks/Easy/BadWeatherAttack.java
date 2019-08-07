@@ -1,4 +1,4 @@
-package pro.mrcl.ProjectXANA.Attacks.Pathetic;
+package pro.mrcl.ProjectXANA.Attacks.Easy;
 
 import com.mysql.jdbc.Buffer;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class BadWeatherAttack extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    public BadWeatherAttack() { super(ATTACKDIFFICULTY.PATHEHTIC);}
+    public BadWeatherAttack() { super(ATTACKDIFFICULTY.EASY);}
 
     @Override
     public boolean startAttack() {
@@ -27,13 +27,14 @@ public class BadWeatherAttack extends AbstractAttack {
         if (!wasActivated) {
             towerAttack = new SimpleActivationAttack();
             towerAttack.startAttack();
-            Bukkit.getWorld("NewKadic").setStorm(true);
-            Bukkit.getWorld("NewKadic").setThunderDuration(1200);
+            Bukkit.broadcastMessage(ChatColor.RED+"This sudden change in weather seems... un-natural. Maybe we should check it out");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"xweather set Windy 99999 NewKadic");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"xweather set Thunderstorm 99999 NewKadic");
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onAttackEnd(AttackEndEvent e) {
                     if (e.getAttack().equals(towerAttack)) {
-                        Bukkit.getWorld("NewKadic").setStorm(false);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"xweather stop");
                         safeStopAttack();
                     }
                 }
