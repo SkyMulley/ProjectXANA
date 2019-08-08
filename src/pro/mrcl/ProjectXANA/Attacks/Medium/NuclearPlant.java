@@ -77,6 +77,7 @@ public class NuclearPlant extends AbstractAttack {
 
     @Override
     public boolean stopAttack() {
+        Bukkit.broadcastMessage("[Superscan] "+ChatColor.GREEN+"High voltage in Electric Pylon 2HA is now subsiding");
         super.stopAttack();
         Bukkit.getScheduler().cancelTask(attackID1);
         return true;
