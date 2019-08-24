@@ -34,6 +34,7 @@ public class NuclearPlant extends AbstractAttack {
                     if (e.getAttack().equals(towerAttack)) {
                         Bukkit.getScheduler().cancelTask(attackID1);
                         if(attackID2!=0) {Bukkit.getScheduler().cancelTask(attackID2);}
+                        Bukkit.broadcastMessage("[Superscan] "+ChatColor.GREEN+"High voltage in Electric Pylon 2HA is now subsiding");
                         safeStopAttack();
                     }
                 }
@@ -77,7 +78,6 @@ public class NuclearPlant extends AbstractAttack {
 
     @Override
     public boolean stopAttack() {
-        Bukkit.broadcastMessage("[Superscan] "+ChatColor.GREEN+"High voltage in Electric Pylon 2HA is now subsiding");
         super.stopAttack();
         Bukkit.getScheduler().cancelTask(attackID1);
         return true;

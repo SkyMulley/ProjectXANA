@@ -46,6 +46,7 @@ public class Meteorite extends AbstractAttack {
                             if (attackID2 != 0) {
                                 Bukkit.getScheduler().cancelTask(attackID2);
                             }
+                            Bukkit.broadcastMessage("[Superscan] "+ChatColor.GREEN+"Meteorite has returned to previous course.");
                             safeStopAttack();
                         }
                     }catch (Exception ex) {
@@ -92,7 +93,6 @@ public class Meteorite extends AbstractAttack {
 
     @Override
     public boolean stopAttack() {
-        Bukkit.broadcastMessage("[Superscan] "+ChatColor.GREEN+"Meteorite has returned to previous course.");
         super.stopAttack();
         Bukkit.getScheduler().cancelTask(attackID1);
         return true;
