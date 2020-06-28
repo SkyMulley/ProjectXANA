@@ -43,14 +43,11 @@ public class GroupXanafication extends AbstractAttack {
                     if (xanafiedWarriors.contains(xanafiedWarrior)) {
                         xanafiedWarrior.dexanafy();
                         xanafiedWarriors.remove(xanafiedWarrior);
-                        if(EligibilityChecker.getNonVirtedEligiblePlayers().isEmpty()) {
+                        if(!EligibilityChecker.getNonVirtedEligiblePlayers().isEmpty()) {
                             Random random = new Random();
                             xanafiedWarrior = EligibilityChecker.getNonVirtedEligiblePlayers().get(random.nextInt(EligibilityChecker.getNonVirtedEligiblePlayers().size()));
                             xanafiedWarriors.add(xanafiedWarrior);
                             xanafiedWarrior.xanafy();
-                        }
-                        if(xanafiedWarriors.isEmpty()) {
-                            safeStopAttack();
                         }
                     }
                 }
@@ -59,7 +56,7 @@ public class GroupXanafication extends AbstractAttack {
             if(!eligebleWarriors.isEmpty()) {
                 double intwarriors = Math.ceil(eligebleWarriors.size() / 3);
                 if(intwarriors <= 1) {
-                    safeStopAttack();
+                    fail("One or less players were found eligible for group xanafication, so attack was cancelled");
                     return false;
                 }
                 for(int i = 0; i < intwarriors; i++) {
@@ -69,7 +66,7 @@ public class GroupXanafication extends AbstractAttack {
                     xanafiedWarrior.xanafy();
                 }
             } else {
-                safeStopAttack();
+                fail("No eligible players were found for group xanafication");
                 return false;
             }
             return true;

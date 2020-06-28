@@ -42,7 +42,7 @@ public class LostMaze extends AbstractAttack {
                         event.getScannerGroup().setDestinationSector(event.getScannerGroup().getVirtualWorld().findSector(SECTORTYPE.CARTHAGE));
                         event.getLyokoWarrior().getPlayer().sendMessage(ChatColor.RED+"There seems to be an issue with the scanner, who knows what could of messed up!");
                     }catch (SectorDoesNotExistException e) {
-                        safeStopAttack();
+                        fail("LostMaze attack attempted to send a player to a Carthage sector, but none exists! Ending attack");
                     }
                 }
             });

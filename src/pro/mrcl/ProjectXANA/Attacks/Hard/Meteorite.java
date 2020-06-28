@@ -51,6 +51,7 @@ public class Meteorite extends AbstractAttack {
                         }
                     }catch (Exception ex) {
                         ex.printStackTrace();
+                        fail("Something went wrong when attempting to run onRTTP function, emergency ending attack");
                     }
                 }
             });
