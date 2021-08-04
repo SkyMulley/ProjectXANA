@@ -38,7 +38,7 @@ public class GroupXanafication extends AbstractAttack {
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onnXanafiedLeave(PlayerQuitEvent e) {
-                    LyokoWarrior xanafiedWarrior = Main.getMainInstance().getLyokoWarriors().get(e);
+                    LyokoWarrior xanafiedWarrior = Main.getMainInstance().getLyokoWarriors().get(e.getPlayer());
                     if (xanafiedWarriors.contains(xanafiedWarrior)) {
                         xanafiedWarrior.dexanafy();
                         xanafiedWarriors.remove(xanafiedWarrior);
