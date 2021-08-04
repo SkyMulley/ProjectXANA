@@ -40,7 +40,6 @@ public class Meteorite extends AbstractAttack {
                 public void onRTTP(RTTPevent e) {
                     try {
                         if (!towerAttack.getTower().isActivated()) {
-                            Bukkit.getScheduler().cancelTask(attackID1);
                             if (attackID2 != 0) {
                                 Bukkit.getScheduler().cancelTask(attackID2);
                             }

@@ -33,7 +33,6 @@ public class ChemicalTrain extends AbstractAttack {
                 @EventHandler
                 public void onAttackEnd(AttackEndEvent e) {
                     if (e.getAttack().equals(towerAttack)) {
-                        Bukkit.getScheduler().cancelTask(attackID1);
                         if(attackID2!=0) {Bukkit.getScheduler().cancelTask(attackID2);}
                         Bukkit.broadcastMessage("[Superscan] "+ChatColor.GREEN+"Trains 13 and 51 now coming to a complete stop.");
                         safeStopAttack();
