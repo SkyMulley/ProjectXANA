@@ -13,9 +13,9 @@ import org.bukkit.event.EventHandler;
 
 public class Meteorite extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    int counter;
-    int attackID1;
-    int attackID2;
+    private int counter;
+    private int attackID1;
+    private int attackID2;
     public Meteorite() {
         super(ATTACKDIFFICULTY.FROMHARD);
     }

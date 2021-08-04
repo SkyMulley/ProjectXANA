@@ -15,9 +15,9 @@ import org.bukkit.potion.PotionEffectType;
 
 public class ChemicalTrain extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    int counter;
-    int attackID1;
-    int attackID2;
+    private int counter;
+    private int attackID1;
+    private int attackID2;
     public ChemicalTrain() {
         super(ATTACKDIFFICULTY.FROMMEDIUM);
     }
