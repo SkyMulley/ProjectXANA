@@ -38,7 +38,7 @@ public class BadWeatherAttack extends AbstractAttack {
     public boolean stopAttack() {
         super.stopAttack();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"xweather stop");
-        towerAttack.stopAttack();
+        towerAttack.safeStopAttack();
         return true;
     }
 }
