@@ -1,6 +1,7 @@
 package pro.mrcl.ProjectXANA.Attacks.Hard;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.Cause.Cause;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.WorldEvents.RTTPevent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
@@ -55,33 +56,26 @@ public class Meteorite extends AbstractAttack {
             Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED +" Satellite 82HA has altered the course of a nearby meteorite cluster, potential collision course detected.");
             counter = -1;
             attackID2 = 0;
-            attackID1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getMainInstance(), new Runnable() {
-                @Override
-                public void run() {
-                    counter = counter + 1;
-                    if (counter == 1) {
-                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Collision course confirmed, meteorite designated MZ is now on collision course with Earth. T-Minus 10 minutes");
-                    }
-                    if (counter == 2) {
-                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Meteorite MZ is now T-Minus 5 minutes from collision");
-                    }
-                    if (counter == 3) {
-                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Collision with Meteorite MZ to Earth imminent");
-                        attackID2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getMainInstance(), new Runnable() {
-                            @Override
-                            public void run() {
-                                Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Collision detected at Boulogne-Billancourt");
-                                for(Player player : Bukkit.getOnlinePlayers()) {
-                                    if(!Main.getMainInstance().getLyokoWarriors().get(player).isXanaIgnored()) {
-                                        player.sendMessage(ChatColor.RED+"You have failed to beat XANA and died...");
-                                        Main.getMainInstance().getLyokoWarriors().get(player).removetags();
-                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"warp FrontierDeath "+player.getName());
-                                    }
-                                }
-                                stopAttack();
+            attackID1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getMainInstance(), () -> {
+                counter = counter + 1;
+                if (counter == 1) {
+                    Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Collision course confirmed, meteorite designated MZ is now on collision course with Earth. T-Minus 10 minutes");
+                }
+                if (counter == 2) {
+                    Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Meteorite MZ is now T-Minus 5 minutes from collision");
+                }
+                if (counter == 3) {
+                    Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Collision with Meteorite MZ to Earth imminent");
+                    attackID2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getMainInstance(), () -> {
+                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Collision detected at Boulogne-Billancourt");
+                        for(LyokoWarrior warrior : Main.getMainInstance().getLyokoWarriors().values()) {
+                            if(!warrior.isXanaIgnored()) {
+                                warrior.getPlayer().sendMessage(ChatColor.RED+"You have failed to beat XANA and died...");
+                                warrior.murder(new Cause("Meteorite"));
                             }
-                        }, 300L);
-                    }
+                        }
+                        stopAttack();
+                    }, 300L);
                 }
             }, 0L, 6000L);
             return true;

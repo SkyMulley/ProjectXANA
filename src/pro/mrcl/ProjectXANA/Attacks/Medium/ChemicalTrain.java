@@ -1,6 +1,7 @@
 package pro.mrcl.ProjectXANA.Attacks.Medium;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.Cause.Cause;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
@@ -42,44 +43,34 @@ public class ChemicalTrain extends AbstractAttack {
             Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED +" Region internet outage, detecting traces of malware on local ISPs");
             counter = -1;
             attackID2 = 0;
-            attackID1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getMainInstance(), new Runnable() {
-                @Override
-                public void run() {
-                    counter = counter + 1;
-                    if (counter == 1) {
-                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Trains 13 and 51 detected on collision course on Boulogne-Billancourt Northern Line. 10 minutes to collision");
-                    }
-                    if (counter == 2) {
-                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Trains 13 and 51 detected on collision course on Boulogne-Billancourt Northern Line. (Train 51 cargo - Misc Chemicals) 5 minutes to collision");
-                    }
-                    if (counter == 3) {
-                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Train collision imminent");
-                        attackID2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getMainInstance(), new Runnable() {
-                            @Override
-                            public void run() {
-                                Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Train collision, detecting chemicals spreading into lower atmosphere");
-                                for(Player player : Bukkit.getOnlinePlayers()) {
-                                    if(!Main.getMainInstance().getLyokoWarriors().get(player).isXanaIgnored() || !Main.getMainInstance().getLyokoWarriors().get(player).isVirtualized()) {
-                                        player.sendMessage(ChatColor.RED+"You have been poisoned by the chemicals in the air released by the colliding trains");
-                                        player.addPotionEffect(new PotionEffect(PotionEffectType.POISON,15,10));
-                                    }
-                                }
-                                Bukkit.getScheduler().runTaskLater(Main.getMainInstance(), new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                for(Player player : Bukkit.getOnlinePlayers()) {
-                                                    if(!Main.getMainInstance().getLyokoWarriors().get(player).isXanaIgnored() || !Main.getMainInstance().getLyokoWarriors().get(player).isVirtualized()) {
-                                                        player.sendMessage(ChatColor.RED+"You have failed to beat XANA and died...");
-                                                        Main.getMainInstance().getLyokoWarriors().get(player).removetags();
-                                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"warp FrontierDeath "+player.getName());
-                                                    }
-                                                }
-                                            }
-                                            },300L);
-                                stopAttack();
+            attackID1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getMainInstance(), () -> {
+                counter = counter + 1;
+                if (counter == 1) {
+                    Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Trains 13 and 51 detected on collision course on Boulogne-Billancourt Northern Line. 10 minutes to collision");
+                }
+                if (counter == 2) {
+                    Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Trains 13 and 51 detected on collision course on Boulogne-Billancourt Northern Line. (Train 51 cargo - Misc Chemicals) 5 minutes to collision");
+                }
+                if (counter == 3) {
+                    Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Train collision imminent");
+                    attackID2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getMainInstance(), () -> {
+                        Bukkit.broadcastMessage("[Superscan]" + ChatColor.RED + " Train collision, detecting chemicals spreading into lower atmosphere");
+                        for(Player player : Bukkit.getOnlinePlayers()) {
+                            if(!Main.getMainInstance().getLyokoWarriors().get(player).isXanaIgnored() || !Main.getMainInstance().getLyokoWarriors().get(player).isVirtualized()) {
+                                player.sendMessage(ChatColor.RED+"You have been poisoned by the chemicals in the air released by the colliding trains");
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON,15,10));
                             }
-                        }, 300L);
-                    }
+                        }
+                        Bukkit.getScheduler().runTaskLater(Main.getMainInstance(), () -> {
+                            for(LyokoWarrior warrior : Main.getMainInstance().getLyokoWarriors().values()) {
+                                if(!warrior.isXanaIgnored() || !warrior.isVirtualized()) {
+                                    warrior.getPlayer().sendMessage(ChatColor.RED+"You have failed to beat XANA and died...");
+                                    warrior.murder(new Cause("ChemicalTrain"));
+                                }
+                            }
+                        },300L);
+                        stopAttack();
+                    }, 300L);
                 }
             }, 0L, 6000L);
             return true;
