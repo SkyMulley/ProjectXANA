@@ -25,7 +25,7 @@ public class EligibilityChecker {
         List<LyokoWarrior> eligebleWarriors = new ArrayList<>();
         lyokoWarriors.forEach(lyokoWarrior -> {
             if (!lyokoWarrior.isXanaIgnored() && !lyokoWarrior.isXanafied() && !lyokoWarrior.isFrontiered()) {
-                eligebleWarriors.add(lyokoWarrior); //if the warrior isnt virtualized, ignored or already xanafied
+                eligebleWarriors.add(lyokoWarrior); //if the warrior isnt frontiered, ignored or already xanafied
             }
         });
         return eligebleWarriors;
