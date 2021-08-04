@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class LockedBoilerRoom extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    private Block doorBlock = Bukkit.getWorld("NewKadic").getBlockAt(-125,103,153);
+    private final Block doorBlock = Bukkit.getWorld("NewKadic").getBlockAt(-125,103,153);
     public LockedBoilerRoom() { super(ATTACKDIFFICULTY.FROMEASY);}
 
     @Override

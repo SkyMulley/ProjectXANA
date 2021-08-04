@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class GroupXanafication extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    private List<LyokoWarrior> xanafiedWarriors = new ArrayList<>();
+    private final List<LyokoWarrior> xanafiedWarriors = new ArrayList<>();
 
     public GroupXanafication() {super(ATTACKDIFFICULTY.FROMHARD);}
 
