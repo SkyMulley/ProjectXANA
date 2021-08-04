@@ -4,6 +4,7 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEn
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.Cause.Cause;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.WorldEvents.RTTPevent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
+import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.ReturnToThePast;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
@@ -17,6 +18,8 @@ public class Meteorite extends AbstractAttack {
     private int counter;
     private int attackID1;
     private int attackID2;
+    private ReturnToThePast rttp;
+    private final int attackDuration = 18300;
     public Meteorite() {
         super(ATTACKDIFFICULTY.FROMHARD);
     }
@@ -26,6 +29,7 @@ public class Meteorite extends AbstractAttack {
         boolean wasActivated = isActivated();
         super.startAttack();
         if (!wasActivated) {
+            rttp = Main.getMainInstance().getNetwork().getReturnToThePast();
             towerAttack = new SimpleActivationAttack();
             towerAttack.startAttack();
             registerListener(new org.bukkit.event.Listener() {
@@ -33,6 +37,7 @@ public class Meteorite extends AbstractAttack {
                 public void onAttackEnd(AttackEndEvent e) {
                     if (e.getAttack().equals(towerAttack)) {
                         Bukkit.broadcastMessage(ChatColor.BLUE+"The tower has been deactivated but the meteorite is still on a collision course, what can we do now?");
+                        rttp.override(attackDuration);
                     }
                 }
             });
@@ -86,6 +91,7 @@ public class Meteorite extends AbstractAttack {
     @Override
     public boolean stopAttack() {
         super.stopAttack();
+        rttp.removeOverride();
         Bukkit.getScheduler().cancelTask(attackID1);
         towerAttack.safeStopAttack();
         return true;
