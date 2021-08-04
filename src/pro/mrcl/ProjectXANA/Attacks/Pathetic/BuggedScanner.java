@@ -44,6 +44,7 @@ public class BuggedScanner extends AbstractAttack {
     @Override
     public boolean stopAttack() {
         super.stopAttack();
+        towerAttack.safeStopAttack();
         return true;
     }
 }

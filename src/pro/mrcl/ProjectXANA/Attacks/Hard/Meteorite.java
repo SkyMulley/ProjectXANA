@@ -94,6 +94,7 @@ public class Meteorite extends AbstractAttack {
     public boolean stopAttack() {
         super.stopAttack();
         Bukkit.getScheduler().cancelTask(attackID1);
+        towerAttack.safeStopAttack();
         return true;
     }
 }

@@ -43,6 +43,7 @@ public class ElevatorLockAttack extends AbstractAttack {
     public boolean stopAttack() {
         super.stopAttack();
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled no");
+        towerAttack.safeStopAttack();
         return true;
     }
 }

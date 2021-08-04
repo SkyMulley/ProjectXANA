@@ -51,6 +51,7 @@ public class RTTPAttack extends AbstractAttack {
     public boolean stopAttack() {
         super.stopAttack();
         Bukkit.getScheduler().cancelTask(attackID);
+        towerAttack.safeStopAttack();
         return true;
     }
 }

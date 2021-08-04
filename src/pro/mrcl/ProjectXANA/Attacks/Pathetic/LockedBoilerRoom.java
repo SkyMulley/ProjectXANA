@@ -55,6 +55,7 @@ public class LockedBoilerRoom extends AbstractAttack {
     @Override
     public boolean stopAttack() {
         super.stopAttack();
+        towerAttack.safeStopAttack();
         return true;
     }
 }
