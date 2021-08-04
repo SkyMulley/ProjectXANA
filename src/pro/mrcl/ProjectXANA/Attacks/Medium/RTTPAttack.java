@@ -32,15 +32,12 @@ public class RTTPAttack extends AbstractAttack {
                 }
             });
             BukkitScheduler scheduler = getServer().getScheduler();
-            attackID = scheduler.scheduleSyncRepeatingTask(Main.getMainInstance(), new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Main.getMainInstance().getNetwork().getReturnToThePast().activate(true);
-                        Bukkit.broadcastMessage("The Return to the Past program seems to be bugging out, what could be the issue?");
-                    } catch (Exception e) {
-                        safeStopAttack();
-                    }
+            attackID = scheduler.scheduleSyncRepeatingTask(Main.getMainInstance(), () -> {
+                try {
+                    Main.getMainInstance().getNetwork().getReturnToThePast().activate(true);
+                    Bukkit.broadcastMessage("The Return to the Past program seems to be bugging out, what could be the issue?");
+                } catch (Exception e) {
+                    safeStopAttack();
                 }
             }, 0L, 12000L);
         }
