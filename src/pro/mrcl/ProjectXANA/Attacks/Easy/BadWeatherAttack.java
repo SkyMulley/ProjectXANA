@@ -26,7 +26,6 @@ public class BadWeatherAttack extends AbstractAttack {
                 @EventHandler
                 public void onAttackEnd(AttackEndEvent e) {
                     if (e.getAttack().equals(towerAttack)) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"xweather stop");
                         safeStopAttack();
                     }
                 }
