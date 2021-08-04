@@ -5,12 +5,9 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEn
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.LyokoWarriorEvents.MidVirtEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Exceptions.SectorDoesNotExistException;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
-import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AttackModule;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
-import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.ChatColor;
-import org.bukkit.Difficulty;
 import org.bukkit.event.EventHandler;
 
 public class LostMaze extends AbstractAttack {

@@ -8,9 +8,7 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATT
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import pro.mrcl.ProjectXANA.AttackLogic.EligibilityChecker;
 
 public class NuclearPlant extends AbstractAttack {
     private SimpleActivationAttack towerAttack;

@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import pro.mrcl.ProjectXANA.AttackLogic.EligibilityChecker;
 
 public class ChemicalTrain extends AbstractAttack {
     private SimpleActivationAttack towerAttack;

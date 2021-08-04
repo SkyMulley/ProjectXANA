@@ -2,7 +2,6 @@ package pro.mrcl.ProjectXANA.AttackLogic;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.LyokoWarrior.LyokoWarrior;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,7 +6,6 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.P
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
 import org.bukkit.event.EventHandler;
 import org.bukkit.scheduler.BukkitScheduler;
 
