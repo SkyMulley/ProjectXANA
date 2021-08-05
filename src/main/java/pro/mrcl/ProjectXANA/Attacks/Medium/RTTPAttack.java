@@ -1,4 +1,4 @@
-package pro.mrcl.ProjectXANA.Attacks.Pathetic;
+package pro.mrcl.ProjectXANA.Attacks.Medium;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
@@ -7,10 +7,14 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATT
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.scheduler.BukkitScheduler;
 
-public class ElevatorLockAttack extends AbstractAttack {
+import static org.bukkit.Bukkit.getServer;
+
+public class RTTPAttack extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    public ElevatorLockAttack() { super(ATTACKDIFFICULTY.FROMEASY);}
+    private int attackID;
+    public RTTPAttack() { super(ATTACKDIFFICULTY.FROMMEDIUM);}
 
     @Override
     public boolean startAttack() {
@@ -27,14 +31,15 @@ public class ElevatorLockAttack extends AbstractAttack {
                     }
                 }
             });
-            try {
-                if (!Main.getMainInstance().getNetwork().getVWorld("Lyoko").getScannerGroup().getEmptyScanner().isPowered()) {
+            BukkitScheduler scheduler = getServer().getScheduler();
+            attackID = scheduler.scheduleSyncRepeatingTask(Main.getMainInstance(), () -> {
+                try {
+                    Main.getMainInstance().getNetwork().getReturnToThePast().activate(true);
+                    Bukkit.broadcastMessage("The Return to the Past program seems to be bugging out, what could be the issue?");
+                } catch (Exception e) {
                     safeStopAttack();
                 }
-            }catch (Exception e) {
-                safeStopAttack();
-            }
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled yes");
+            }, 0L, 12000L);
         }
         return false;
     }
@@ -42,7 +47,8 @@ public class ElevatorLockAttack extends AbstractAttack {
     @Override
     public boolean stopAttack() {
         super.stopAttack();
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled no");
+        Bukkit.getScheduler().cancelTask(attackID);
+        towerAttack.safeStopAttack();
         return true;
     }
 }

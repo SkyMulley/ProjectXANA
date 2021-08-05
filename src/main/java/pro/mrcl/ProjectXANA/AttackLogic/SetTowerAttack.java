@@ -8,7 +8,6 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.VirtualStructures.Tower;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 

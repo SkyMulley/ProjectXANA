@@ -1,4 +1,4 @@
-package pro.mrcl.ProjectXANA.Attacks.Medium;
+package pro.mrcl.ProjectXANA.Attacks.Pathetic;
 
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Events.AttackEvents.AttackEndEvent;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.AbstractAttack;
@@ -6,16 +6,11 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.P
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
 import org.bukkit.event.EventHandler;
-import org.bukkit.scheduler.BukkitScheduler;
 
-import static org.bukkit.Bukkit.getServer;
-
-public class RTTPAttack extends AbstractAttack {
+public class ElevatorLockAttack extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    private int attackID;
-    public RTTPAttack() { super(ATTACKDIFFICULTY.FROMMEDIUM);}
+    public ElevatorLockAttack() { super(ATTACKDIFFICULTY.FROMEASY);}
 
     @Override
     public boolean startAttack() {
@@ -32,18 +27,14 @@ public class RTTPAttack extends AbstractAttack {
                     }
                 }
             });
-            BukkitScheduler scheduler = getServer().getScheduler();
-            attackID = scheduler.scheduleSyncRepeatingTask(Main.getMainInstance(), new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Main.getMainInstance().getNetwork().getReturnToThePast().activate(true);
-                        Bukkit.broadcastMessage("The Return to the Past program seems to be bugging out, what could be the issue?");
-                    } catch (Exception e) {
-                        safeStopAttack();
-                    }
+            try {
+                if (!Main.getMainInstance().getNetwork().getVWorld("Lyoko").getScannerGroup().getEmptyScanner().isPowered()) {
+                    safeStopAttack();
                 }
-            }, 0L, 12000L);
+            }catch (Exception e) {
+                safeStopAttack();
+            }
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled yes");
         }
         return false;
     }
@@ -51,7 +42,8 @@ public class RTTPAttack extends AbstractAttack {
     @Override
     public boolean stopAttack() {
         super.stopAttack();
-        Bukkit.getScheduler().cancelTask(attackID);
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"elevator edit factory disabled no");
+        towerAttack.safeStopAttack();
         return true;
     }
 }

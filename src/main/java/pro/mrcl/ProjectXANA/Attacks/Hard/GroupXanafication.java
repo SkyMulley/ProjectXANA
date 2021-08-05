@@ -6,7 +6,6 @@ import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Abstra
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Attacks.Core.Pathethic.SimpleActivationAttack;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Logic.Programs.Xana.Difficulty.ATTACKDIFFICULTY;
 import mrcl.pro.GoodOldJack12.ProjectCarthage.Main;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 import pro.mrcl.ProjectXANA.AttackLogic.EligibilityChecker;
@@ -17,7 +16,7 @@ import java.util.Random;
 
 public class GroupXanafication extends AbstractAttack {
     private SimpleActivationAttack towerAttack;
-    private List<LyokoWarrior> xanafiedWarriors = new ArrayList<>();
+    private final List<LyokoWarrior> xanafiedWarriors = new ArrayList<>();
 
     public GroupXanafication() {super(ATTACKDIFFICULTY.FROMHARD);}
 
@@ -39,7 +38,7 @@ public class GroupXanafication extends AbstractAttack {
             registerListener(new org.bukkit.event.Listener() {
                 @EventHandler
                 public void onnXanafiedLeave(PlayerQuitEvent e) {
-                    LyokoWarrior xanafiedWarrior = Main.getMainInstance().getLyokoWarriors().get(e);
+                    LyokoWarrior xanafiedWarrior = Main.getMainInstance().getLyokoWarriors().get(e.getPlayer());
                     if (xanafiedWarriors.contains(xanafiedWarrior)) {
                         xanafiedWarrior.dexanafy();
                         xanafiedWarriors.remove(xanafiedWarrior);
